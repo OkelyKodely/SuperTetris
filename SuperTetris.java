@@ -1,16 +1,10 @@
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
-import java.awt.Component;
 import javax.swing.*;
-import javax.sound.sampled.*;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.SocketAddress;
-import java.util.logging.*;
-import java.util.Arrays;
-import java.net.URL;
 
 public class SuperTetris implements MouseListener, KeyListener {
 
@@ -52,17 +46,37 @@ public class SuperTetris implements MouseListener, KeyListener {
 
         ip.setLocation(10, 20);
 
+        port_.setSize(120, 20);
+
+        port_.setLocation(10, 41);
+
+        port_server.setSize(120, 20);
+
+        port_server.setLocation(10, 62);
+
         con.setSize(120, 20);
 
-        con.setLocation(10, 41);
+        con.setLocation(10, 83);
 
         con.addMouseListener(this);
 
+        wait.setSize(120, 20);
+
+        wait.setLocation(10, 104);
+
+        wait.addMouseListener(this);
+
         oppPanel.add(ip);
+
+        oppPanel.add(port_);
+
+        oppPanel.add(port_server);
 
         oppPanel.add(con);
 
-        oppLinesLbl.setLocation(10, 70);
+        oppPanel.add(wait);
+
+        oppLinesLbl.setLocation(10, 104);
 
         oppLinesLbl.setSize(150, 20);
 
@@ -117,7 +131,9 @@ public class SuperTetris implements MouseListener, KeyListener {
     }
 
     private JTextField ip = new JTextField();
-
+    private JTextField port_ = new JTextField();
+    private JTextField port_server = new JTextField();
+    private JButton wait = new JButton("wait.");
     private JButton con = new JButton("connect.");
 
     private ServerSocket serverSocket;
@@ -129,6 +145,8 @@ public class SuperTetris implements MouseListener, KeyListener {
     private String ipAddress = "x.x.x.x";
 
     private int port = 2000;
+
+    private int serverport = 4000;
 
     private boolean connect = false;
 
@@ -243,6 +261,7 @@ public class SuperTetris implements MouseListener, KeyListener {
     public void connect() {
         try {
             ipAddress = ip.getText();
+            port = Integer.valueOf(port_.getText());
             socket = new Socket(ipAddress, port);
             dOut = new DataOutputStream(socket.getOutputStream());
             connect = true;
@@ -253,7 +272,8 @@ public class SuperTetris implements MouseListener, KeyListener {
 
     public void waitForAccept() {
         try {
-            serverSocket = new ServerSocket(port);
+            serverport = Integer.valueOf(port_server.getText());
+            serverSocket = new ServerSocket(serverport);
             clientSocket = serverSocket.accept();
             accept = true;
         } catch(Exception e) {
@@ -750,19 +770,25 @@ public class SuperTetris implements MouseListener, KeyListener {
 
     public void mousePressed(MouseEvent me) {
 
-        Thread t1 = new Thread(new Runnable() {
-            public void run() {
-                waitForAccept();
-            }
-        });
-        t1.start();
+        if(me.getSource() == wait) {
+            System.out.println("waiting...");
+            Thread t1 = new Thread(new Runnable() {
+                public void run() {
+                    waitForAccept();
+                }
+            });
+            t1.start();
+        }
 
-        Thread t2 = new Thread(new Runnable() {
-            public void run() {
-                connect();
-            }
-        });
-        t2.start();
+        if(me.getSource() == con) {
+            System.out.println("connect...");
+            Thread t1 = new Thread(new Runnable() {
+                public void run() {
+                    connect();
+                }
+            });
+            t1.start();
+        }
 
         gameFrame.requestFocus();
 
