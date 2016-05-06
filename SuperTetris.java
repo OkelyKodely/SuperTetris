@@ -136,7 +136,7 @@ public class SuperTetris implements MouseListener, KeyListener {
     private JButton wait = new JButton("wait.");
     private JButton con = new JButton("connect.");
 
-    private ServerSocket serverSocket;
+    private ServerSocket serverSocket = null;
 
     private Socket clientSocket = null;
 
@@ -301,6 +301,7 @@ public class SuperTetris implements MouseListener, KeyListener {
 
     public void getPiece() {
         try {
+            while(clientSocket == null) {}
             byte[] messageByte = new byte[1000];
             String messageString = "";
             DataInputStream in = new DataInputStream(clientSocket.getInputStream());
@@ -781,13 +782,13 @@ public class SuperTetris implements MouseListener, KeyListener {
         }
 
         if(me.getSource() == con) {
-            System.out.println("connect...");
-            Thread t1 = new Thread(new Runnable() {
+            System.out.println("connecting...");
+            Thread t2 = new Thread(new Runnable() {
                 public void run() {
                     connect();
                 }
             });
-            t1.start();
+            t2.start();
         }
 
         gameFrame.requestFocus();
