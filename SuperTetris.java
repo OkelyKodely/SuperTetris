@@ -301,7 +301,6 @@ public class SuperTetris implements MouseListener, KeyListener {
 
     public void getPiece() {
         try {
-            while(clientSocket == null) {}
             byte[] messageByte = new byte[1000];
             String messageString = "";
             DataInputStream in = new DataInputStream(clientSocket.getInputStream());
@@ -760,7 +759,7 @@ public class SuperTetris implements MouseListener, KeyListener {
     }
     public static void main(String args[]) {
         SuperTetris tetris = new SuperTetris();
-        while(!tetris.accept && !tetris.connect) {
+        while(!tetris.accept || !tetris.connect) {
         }
         tetris.play();
     }
