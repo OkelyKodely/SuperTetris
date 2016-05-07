@@ -764,8 +764,10 @@ public class SuperTetris implements MouseListener, KeyListener {
     }
     public static void main(String args[]) {
         SuperTetris tetris = new SuperTetris();
+        System.out.println("wa iti ng..");
         while(!tetris.accept || !tetris.connect) {
         }
+        System.out.println("waafter iting...");
         tetris.play();
     }
     public void keyTyped(KeyEvent e){}public void keyReleased(KeyEvent e){}
