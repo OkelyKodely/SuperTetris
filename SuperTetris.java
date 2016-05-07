@@ -278,6 +278,7 @@ public class SuperTetris implements MouseListener, KeyListener {
             serverSocket = new ServerSocket(serverport);
             clientSocket = serverSocket.accept();
             accept = true;
+            System.out.println("waiti");
         } catch(Exception e) {
             e.printStackTrace();
         }
@@ -294,6 +295,7 @@ public class SuperTetris implements MouseListener, KeyListener {
                     thepiece += pieces.get(i).blocks.get(0).x + "," + pieces.get(i).blocks.get(0).y + ";" + pieces.get(i).blocks.get(1).x + "," + pieces.get(i).blocks.get(1).y + ";" + pieces.get(i).blocks.get(2).x + "," + pieces.get(i).blocks.get(2).y + ";" + pieces.get(i).blocks.get(3).x + "," + pieces.get(i).blocks.get(3).y + ";" + pieces.get(i).direction + ";" + pieces.get(i).getType() + ";" + lines + val;
                 }
             }
+            System.out.println("put2 " + thepiece);
             dOut.writeBytes(thepiece);
             System.out.println("put " + thepiece);
             dOut.flush();
