@@ -274,11 +274,15 @@ public class SuperTetris implements MouseListener, KeyListener {
 
     public void waitForAccept() {
         try {
+            System.out.println("waiti1");
             serverport = Integer.valueOf(port_server.getText());
+            System.out.println("waiti2");
             serverSocket = new ServerSocket(serverport);
+            System.out.println("waiti3");
             clientSocket = serverSocket.accept();
+            System.out.println("waiti4");
             accept = true;
-            System.out.println("waiti");
+            System.out.println("waiti5");
         } catch(Exception e) {
             e.printStackTrace();
         }
