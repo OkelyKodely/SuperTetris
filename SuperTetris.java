@@ -262,9 +262,11 @@ public class SuperTetris implements MouseListener, KeyListener {
         try {
             ipAddress = ip.getText();
             port = Integer.valueOf(port_.getText());
+            System.out.println(ipAddress + " " + port);
             socket = new Socket(ipAddress, port);
             dOut = new DataOutputStream(socket.getOutputStream());
             connect = true;
+            System.out.println("conn");
         } catch(Exception e) {
             e.printStackTrace();
         }
@@ -302,7 +304,6 @@ public class SuperTetris implements MouseListener, KeyListener {
     public void getPiece() {
         try {
             byte[] messageByte = new byte[1000];
-            String messageString = "";
             DataInputStream in = new DataInputStream(clientSocket.getInputStream());
             int bytesRead = in.read(messageByte);
             thepiece = new String(messageByte, 0, bytesRead);
