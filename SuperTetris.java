@@ -283,6 +283,7 @@ public class SuperTetris implements MouseListener, KeyListener {
             System.out.println("waiti4");
             accept = true;
             System.out.println("waiti5");
+            System.out.println("conn" + connect + " accept " + accept);
         } catch(Exception e) {
             e.printStackTrace();
         }
