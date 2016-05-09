@@ -148,9 +148,9 @@ public class SuperTetris implements MouseListener, KeyListener {
 
     private int serverport = 4000;
 
-    private boolean connect = false;
+    public boolean connect = false;
 
-    private boolean accept = false;
+    public boolean accept = false;
 
     private DataOutputStream dOut = null;
     
@@ -283,7 +283,7 @@ public class SuperTetris implements MouseListener, KeyListener {
             System.out.println("waiti4");
             accept = true;
             System.out.println("waiti5");
-            System.out.println("conn" + connect + " accept " + accept);
+            System.out.println("conn " + connect + " accept " + accept);
         } catch(Exception e) {
             e.printStackTrace();
         }
@@ -787,6 +787,9 @@ public class SuperTetris implements MouseListener, KeyListener {
             Thread t1 = new Thread(new Runnable() {
                 public void run() {
                     waitForAccept();
+                    if(accept && connect) {
+                        play();
+                    }
                 }
             });
             t1.start();
@@ -797,6 +800,9 @@ public class SuperTetris implements MouseListener, KeyListener {
             Thread t2 = new Thread(new Runnable() {
                 public void run() {
                     connect();
+                    if(accept && connect) {
+                        play();
+                    }
                 }
             });
             t2.start();
