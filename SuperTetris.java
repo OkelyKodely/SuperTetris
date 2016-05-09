@@ -3,123 +3,15 @@ import java.awt.event.*;
 import java.util.*;
 import javax.swing.*;
 import java.io.*;
-import java.net.ServerSocket;
-import java.net.Socket;
+import java.net.*;
+
 
 public class SuperTetris implements MouseListener, KeyListener {
 
-    public SuperTetris() {
+    
+    private JTextField host = new JTextField();
 
-        gameFrame.setLayout(null);
-
-        Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
-
-        int width = dimension.width;
-
-        gameFrame.setLocation(width/2-600, 30);
-
-        gameFrame.setSize(1200, 745);
-
-        panel.setLocation(0, 0);
-
-        panel.setBackground(Color.white);
-
-        panel.setSize(150, 745);
-
-        gameFrame.add(panel);
-
-        gamePanel.setLocation(0, 0);
-
-        gamePanel.setSize(450, 745);
-
-        mainPanel.add(gamePanel);
-
-        oppPanel.setLocation(450, 0);
-
-        oppPanel.setBackground(Color.white);
-
-        oppPanel.setSize(150, 745);
-
-        oppPanel.setLayout(null);
-
-        JLabel ipAddy = new JLabel("Opponent IP Addy");
-
-        ipAddy.setSize(120, 20);
-
-        ipAddy.setLocation(10, 0);
-
-        ip.setSize(120, 20);
-
-        ip.setLocation(10, 20);
-
-        con.setSize(120, 20);
-
-        con.setLocation(10, 40);
-
-        con.addMouseListener(this);
-
-        oppPanel.add(ipAddy);
-
-        oppPanel.add(ip);
-
-        oppPanel.add(con);
-
-        oppLinesLbl.setLocation(10, 60);
-
-        oppLinesLbl.setSize(150, 20);
-
-        oppPanel.add(oppLinesLbl);
-
-        mainPanel.add(oppPanel);
-
-        oppGamePanel.setLocation(600, 0);
-
-        oppGamePanel.setSize(450, 745);
-
-        mainPanel.add(oppGamePanel);
-
-        mainPanel.setLayout(null);
-
-        mainPanel.setLocation(150, 0);
-
-        mainPanel.setSize(1050, 745);
-
-        gameFrame.add(mainPanel);
-
-        gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        gameFrame.setResizable(false);
-
-        gameFrame.addKeyListener(this);
-
-        gameFrame.setVisible(true);
-
-        linesLbl.setLocation(10, 70);
-
-        linesLbl.setSize(150, 20);
-
-        JLabel fruits1 = new JLabel("SUPER TETRIS");
-
-        JLabel fruits2 = new JLabel("do do do dodo do do do!");
-
-        fruits1.setLocation(10, 100);
-
-        fruits2.setLocation(10, 120);
-        
-        fruits1.setFont(new Font("arial", Font.ITALIC, 12));
-
-        fruits2.setFont(new Font("arial", Font.ITALIC, 10));
-
-        panel.add(fruits1);
-
-        panel.add(fruits2);
-
-        panel.add(linesLbl);
-
-    }
-
-    private JTextField ip = new JTextField();
-    private JButton con = new JButton("Connect/Play");
+    private JButton con = new JButton("Connect");
 
     private ServerSocket serverSocket = null;
 
@@ -127,7 +19,7 @@ public class SuperTetris implements MouseListener, KeyListener {
 
     private Socket socket = null;
 
-    private String ipAddress = "x.x.x.x";
+    private String hostName = "x.x.x.x";
 
     private int port = 5000;
 
@@ -135,8 +27,8 @@ public class SuperTetris implements MouseListener, KeyListener {
 
     public boolean accept = false;
 
-    private DataOutputStream dOut = null;
-    
+    private DataOutputStream dos = null;
+
     private String thepiece = "";
 
     private String thegetpiece = "";
@@ -161,7 +53,7 @@ public class SuperTetris implements MouseListener, KeyListener {
 
     private int delay = 2000;
 
-    private JFrame gameFrame = new JFrame("SUPER TETRIS");
+    private JFrame gameFrame = new JFrame("SuperTetris (Open/forward port 5000 in/on firewall/router!");
 
     private JPanel mainPanel = new JPanel();
 
@@ -173,16 +65,83 @@ public class SuperTetris implements MouseListener, KeyListener {
 
     private JPanel oppPanel = new JPanel();
 
+    public SuperTetris() {
+
+        Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+        int width = dimension.width;
+
+        gameFrame.setLayout(null);
+        gameFrame.setLocation(width/2-600, 30);
+        gameFrame.setSize(1200, 745);
+
+        linesLbl.setLocation(10, 0);
+        linesLbl.setSize(150, 20);
+
+        panel.add(linesLbl);
+        panel.setLayout(null);
+        panel.setLocation(0, 0);
+        panel.setBackground(Color.white);
+        panel.setSize(150, 745);
+
+        gameFrame.add(panel);
+
+        gamePanel.setLocation(0, 0);
+        gamePanel.setSize(450, 745);
+
+        mainPanel.add(gamePanel);
+
+        oppPanel.setLocation(450, 0);
+        oppPanel.setBackground(Color.white);
+        oppPanel.setSize(150, 745);
+        oppPanel.setLayout(null);
+
+        JLabel oppHostName = new JLabel("Opp hostName");
+        oppHostName.setSize(120, 20);
+        oppHostName.setLocation(10, 0);
+
+        host.setSize(120, 20);
+        host.setLocation(10, 20);
+
+        con.setSize(120, 20);
+        con.setLocation(10, 40);
+        con.addMouseListener(this);
+
+        oppPanel.add(oppHostName);
+        oppPanel.add(host);
+        oppPanel.add(con);
+
+        oppLinesLbl.setLocation(10, 60);
+        oppLinesLbl.setSize(150, 20);
+
+        oppPanel.add(oppLinesLbl);
+
+        mainPanel.add(oppPanel);
+
+        oppGamePanel.setLocation(600, 0);
+        oppGamePanel.setSize(450, 745);
+
+        mainPanel.add(oppGamePanel);
+        mainPanel.setLayout(null);
+        mainPanel.setLocation(150, 0);
+        mainPanel.setSize(1050, 745);
+
+        gameFrame.add(mainPanel);
+        gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        gameFrame.setResizable(false);
+        gameFrame.addKeyListener(this);
+        gameFrame.setVisible(true);
+    }
+
     private boolean isNotDown(Piece piece) {
-       if(piece.blocks.get(0).y == 15
-                ||
-                piece.blocks.get(1).y == 15
-                ||
-                piece.blocks.get(2).y == 15
-                ||
-                piece.blocks.get(3).y == 15) {
-           return false;
+
+        if(piece.blocks.get(0).y == 15 ||
+           piece.blocks.get(1).y == 15 ||
+           piece.blocks.get(2).y == 15 ||
+           piece.blocks.get(3).y == 15) {
+
+            return false;
         }
+
         return true;
     }
     
@@ -243,37 +202,72 @@ public class SuperTetris implements MouseListener, KeyListener {
         return false;
     }
 
+    public void getOpponentPieces() {
+        try {
+
+            Thread t1 = new Thread(new Runnable() {
+                public void run() {
+                    while(true) {
+                        getPieces();
+                    }
+                }
+            });
+            t1.start();
+            
+        } catch(Exception e) {
+        }
+    }
+
+    public void startGame() {
+        if(connect && accept) {
+            getOpponentPieces();
+            playTheGame();
+        }
+    }
+
+    public void playTheGame() {
+
+        Thread t1 = new Thread(new Runnable() {
+            public void run() {
+                play();
+            }
+        });
+
+        t1.start();
+    }
+
     public void connect() {
         try {
-            ipAddress = ip.getText();
-            System.out.println(ipAddress + " " + port);
-            socket = new Socket(ipAddress, port);
-            dOut = new DataOutputStream(socket.getOutputStream());
+
+            hostName = host.getText();
+            socket = new Socket(hostName, port);
+            dos = new DataOutputStream(socket.getOutputStream());
             connect = true;
-            System.out.println("conn");
+
         } catch(Exception e) {
             e.printStackTrace();
         }
+
+        startGame();
     }
 
     public void waitForAccept() {
         try {
-            System.out.println("waiti1");
-            System.out.println("waiti2");
+
             serverSocket = new ServerSocket(port);
-            System.out.println("waiti3");
             clientSocket = serverSocket.accept();
-            System.out.println("waiti4");
             accept = true;
-            System.out.println("waiti5");
-            System.out.println("conn " + connect + " accept " + accept);
+
         } catch(Exception e) {
             e.printStackTrace();
         }
+
+        startGame();
     }
 
     public void putPiece() {
         try {
+
             thepiece = "";
             for(int i=0; i<pieces.size(); i++) {
                 String val = System.getProperty("line.separator");
@@ -283,24 +277,24 @@ public class SuperTetris implements MouseListener, KeyListener {
                     thepiece += pieces.get(i).blocks.get(0).x + "," + pieces.get(i).blocks.get(0).y + ";" + pieces.get(i).blocks.get(1).x + "," + pieces.get(i).blocks.get(1).y + ";" + pieces.get(i).blocks.get(2).x + "," + pieces.get(i).blocks.get(2).y + ";" + pieces.get(i).blocks.get(3).x + "," + pieces.get(i).blocks.get(3).y + ";" + pieces.get(i).direction + ";" + pieces.get(i).getType() + ";" + lines + val;
                 }
             }
-            System.out.println("put2 " + thepiece);
-            dOut.write(thepiece.getBytes());
-            System.out.println("put " + thepiece);
-            dOut.flush();
+            dos.write(thepiece.getBytes());
+            dos.flush();
+            
         } catch(Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void getPiece() {
+    public void getOppPiece() {
         try {
+
             byte[] messageByte = new byte[1000];
             DataInputStream in = new DataInputStream(clientSocket.getInputStream());
             int bytesRead = in.read(messageByte);
             thegetpiece = new String(messageByte, 0, bytesRead);
-            System.out.println("get " + thegetpiece);
+            
         } catch (Exception e) {
-            e.printStackTrace();
+            System.exit(0);
         }
     }
 
@@ -309,9 +303,13 @@ public class SuperTetris implements MouseListener, KeyListener {
         linesLbl.setText("Lines: " + lines);
 
         for(int i=0; i<this.board.length; i++) {
+
             for(int j=0; j<this.board[i].length; j++) {
+
                 this.board[i][j] = 0;
+
             }
+
         }
 
         String type = null;
@@ -381,142 +379,6 @@ public class SuperTetris implements MouseListener, KeyListener {
             } catch(Exception e) {}
 
             putPiece();
-
-            getPiece();
-
-            System.out.println("thegetpiece: " + thegetpiece + "\n\n");
-            oppPieces.clear();
-            String thethepiece = "";
-            StringTokenizer stringTokenizer = new StringTokenizer(thegetpiece, System.getProperty("line.separator"));
-            while(stringTokenizer.hasMoreElements()) {
-                thethepiece = stringTokenizer.nextToken().trim();
-                StringTokenizer st = new StringTokenizer(thethepiece, ";");
-                String block1x = st.nextToken().trim() + "";
-                StringTokenizer st2 = new StringTokenizer(block1x, ",");
-                block1x = st2.nextToken().trim() + "";
-                String block1y = "" + st2.nextToken().trim() + "";
-                String block2x = "" + st.nextToken().trim() + "";
-                st2 = new StringTokenizer(block2x, ",");
-                block2x = "" + st2.nextToken().trim() + "";
-                String block2y = "" + st2.nextToken().trim() + "";
-                String block3x = "" + st.nextToken().trim() + "";
-                st2 = new StringTokenizer(block3x, ",");
-                block3x = "" + st2.nextToken().trim() + "";
-                String block3y = "" + st2.nextToken().trim() + "";
-                String block4x = "" + st.nextToken().trim() + "";
-                st2 = new StringTokenizer(block4x, ",");
-                block4x = "" + st2.nextToken().trim() + "";
-                String block4y = "" + st2.nextToken().trim() + "";
-                String direction = "" + st.nextToken().trim() + "";
-                String thetype = "" + st.nextToken().trim() + "";
-                String opp_lines = "" + st.nextToken().trim() + "";
-
-                oppPiece = new Piece( "" + thetype );
-
-                block1x = "" + block1x.trim();
-                block1y = "" + block1y.trim();
-
-                if(block1x.charAt(0) == '0') {
-                    if(block1x.length() == 2)
-                        block1x = String.valueOf(block1x.charAt(1));
-                }
-                if(block1y.charAt(0) == '0') {
-                    if(block1y.length() == 2)
-                        block1y = String.valueOf(block1y.charAt(1));
-                }
-
-                if(block2x.charAt(0) == '0') {
-                    if(block2x.length() == 2)
-                        block2x = String.valueOf(block2x.charAt(1));
-                }
-                if(block2y.charAt(0) == '0') {
-                    if(block2y.length() == 2)
-                        block2y = String.valueOf(block2y.charAt(1));
-                }
-
-                if(block3x.charAt(0) == '0') {
-                    if(block3x.length() == 2)
-                        block3x = String.valueOf(block3x.charAt(1));
-                }
-                if(block3y.charAt(0) == '0') {
-                    if(block3y.length() == 2)
-                        block3y = String.valueOf(block3y.charAt(1));
-                }
-
-                if(block4x.charAt(0) == '0') {
-                    if(block4x.length() == 2)
-                        block4x = String.valueOf(block4x.charAt(1));
-                }
-                if(block4y.charAt(0) == '0') {
-                    if(block4y.length() == 2)
-                        block4y = String.valueOf(block4y.charAt(1));
-                }
-
-                System.out.println(block1x.trim() + "" + "--");
-                System.out.println(block1y.trim() + "" + "--]");
-
-                oppPiece.setLocation(Integer.valueOf(block1x), Integer.valueOf(block1y));
-
-                oppPiece.blocks.clear();
-
-                Block block = new Block();
-                block.x = Integer.valueOf(block1x);
-                block.y = Integer.valueOf(block1y);
-                oppPiece.blocks.add(block);
-
-                block = new Block();
-                block.x = Integer.valueOf(block2x);
-                block.y = Integer.valueOf(block2y);
-                oppPiece.blocks.add(block);
-
-                block = new Block();
-                block.x = Integer.valueOf(block3x);
-                block.y = Integer.valueOf(block3y);
-                oppPiece.blocks.add(block);
-
-                block = new Block();
-                block.x = Integer.valueOf(block4x);
-                block.y = Integer.valueOf(block4y);
-                oppPiece.blocks.add(block);
-
-
-                oppPiece.setType("current");
-
-                if(opp_lines.charAt(0) == '0') {
-                    if(opp_lines.length() == 2)
-                        opp_lines = String.valueOf(opp_lines.charAt(1));
-                }
-
-                
-                opp_lines = thegetpiece.substring(thegetpiece.length()-2, thegetpiece.length());
-                if(opp_lines.charAt(0) == ';') {
-                    if(opp_lines.length() == 2)
-                        opp_lines = String.valueOf(opp_lines.charAt(1));
-                }
-                if(opp_lines.charAt(0) == '0') {
-                    if(opp_lines.length() == 2)
-                        opp_lines = String.valueOf(opp_lines.charAt(1));
-                }
-                System.out.println("["+opp_lines+"]");
-                oppLines = Integer.valueOf(opp_lines);
-
-                oppLinesLbl.setText("Lines: " + oppLines);
-                oppPieces.add(oppPiece);
-
-
-                direction = direction.trim();
-
-                if(direction.equals("up")) {
-                    oppPiece.direction = Piece.Direction.UP;
-                } else if(direction.equals("down")) {
-                    oppPiece.direction = Piece.Direction.DOWN;
-                } else if(direction.equals("left")) {
-                    oppPiece.direction = Piece.Direction.LEFT;
-                } else if(direction.equals("right")) {
-                    oppPiece.direction = Piece.Direction.RIGHT;
-                }
-            }
-            this.redrawOppBlocks();
 
             if(isNotDown(piece) && !juxtaposedTopways(pieces)) {
 
@@ -622,6 +484,151 @@ public class SuperTetris implements MouseListener, KeyListener {
         }
     }
 
+    private void getPieces() {
+
+        getOppPiece();
+
+        oppPieces.clear();
+
+        String thethepiece = "";
+
+        StringTokenizer stringTokenizer = new StringTokenizer(thegetpiece, System.getProperty("line.separator"));
+
+        while(stringTokenizer.hasMoreElements()) {
+
+            thethepiece = stringTokenizer.nextToken().trim();
+
+            StringTokenizer st = new StringTokenizer(thethepiece, ";");
+            String block1x = st.nextToken().trim() + "";
+            StringTokenizer st2 = new StringTokenizer(block1x, ",");
+
+            block1x = st2.nextToken().trim() + "";
+            String block1y = "" + st2.nextToken().trim() + "";
+            String block2x = "" + st.nextToken().trim() + "";
+            st2 = new StringTokenizer(block2x, ",");
+
+            block2x = "" + st2.nextToken().trim() + "";
+            String block2y = "" + st2.nextToken().trim() + "";
+            String block3x = "" + st.nextToken().trim() + "";
+            st2 = new StringTokenizer(block3x, ",");
+
+            block3x = "" + st2.nextToken().trim() + "";
+            String block3y = "" + st2.nextToken().trim() + "";
+            String block4x = "" + st.nextToken().trim() + "";
+            st2 = new StringTokenizer(block4x, ",");
+
+            block4x = "" + st2.nextToken().trim() + "";
+            String block4y = "" + st2.nextToken().trim() + "";
+
+            String direction = "" + st.nextToken().trim() + "";
+            String thetype = "" + st.nextToken().trim() + "";
+            String opp_lines = "" + st.nextToken().trim() + "";
+
+            oppPiece = new Piece( "" + thetype );
+
+            block1x = "" + block1x.trim();
+            block1y = "" + block1y.trim();
+
+            if(block1x.charAt(0) == '0') {
+                if(block1x.length() == 2)
+                    block1x = String.valueOf(block1x.charAt(1));
+            }
+            if(block1y.charAt(0) == '0') {
+                if(block1y.length() == 2)
+                    block1y = String.valueOf(block1y.charAt(1));
+            }
+
+            if(block2x.charAt(0) == '0') {
+                if(block2x.length() == 2)
+                    block2x = String.valueOf(block2x.charAt(1));
+            }
+            if(block2y.charAt(0) == '0') {
+                if(block2y.length() == 2)
+                    block2y = String.valueOf(block2y.charAt(1));
+            }
+
+            if(block3x.charAt(0) == '0') {
+                if(block3x.length() == 2)
+                    block3x = String.valueOf(block3x.charAt(1));
+            }
+            if(block3y.charAt(0) == '0') {
+                if(block3y.length() == 2)
+                    block3y = String.valueOf(block3y.charAt(1));
+            }
+
+            if(block4x.charAt(0) == '0') {
+                if(block4x.length() == 2)
+                    block4x = String.valueOf(block4x.charAt(1));
+            }
+            if(block4y.charAt(0) == '0') {
+                if(block4y.length() == 2)
+                    block4y = String.valueOf(block4y.charAt(1));
+            }
+
+            oppPiece.setLocation(Integer.valueOf(block1x), Integer.valueOf(block1y));
+
+            oppPiece.blocks.clear();
+
+            Block block = new Block();
+            block.x = Integer.valueOf(block1x);
+            block.y = Integer.valueOf(block1y);
+            oppPiece.blocks.add(block);
+
+            block = new Block();
+            block.x = Integer.valueOf(block2x);
+            block.y = Integer.valueOf(block2y);
+            oppPiece.blocks.add(block);
+
+            block = new Block();
+            block.x = Integer.valueOf(block3x);
+            block.y = Integer.valueOf(block3y);
+            oppPiece.blocks.add(block);
+
+            block = new Block();
+            block.x = Integer.valueOf(block4x);
+            block.y = Integer.valueOf(block4y);
+            oppPiece.blocks.add(block);
+
+
+            oppPiece.setType("current");
+
+            if(opp_lines.charAt(0) == '0') {
+                if(opp_lines.length() == 2)
+                    opp_lines = String.valueOf(opp_lines.charAt(1));
+            }
+
+
+            opp_lines = thegetpiece.substring(thegetpiece.length()-2, thegetpiece.length());
+            if(opp_lines.charAt(0) == ';') {
+                if(opp_lines.length() == 2)
+                    opp_lines = String.valueOf(opp_lines.charAt(1));
+            }
+            if(opp_lines.charAt(0) == '0') {
+                if(opp_lines.length() == 2)
+                    opp_lines = String.valueOf(opp_lines.charAt(1));
+            }
+            oppLines = Integer.valueOf(opp_lines);
+
+            oppLinesLbl.setText("Lines: " + oppLines);
+            oppPieces.add(oppPiece);
+
+
+            direction = direction.trim();
+
+            if(direction.equals("up")) {
+                oppPiece.direction = Piece.Direction.UP;
+            } else if(direction.equals("down")) {
+                oppPiece.direction = Piece.Direction.DOWN;
+            } else if(direction.equals("left")) {
+                oppPiece.direction = Piece.Direction.LEFT;
+            } else if(direction.equals("right")) {
+                oppPiece.direction = Piece.Direction.RIGHT;
+            }
+        }
+        this.redrawOppBlocks();
+
+    }
+
     private boolean reachedTopThePiece() {
         for(int i=0; i<piece.blocks.size(); i++) {
             for(int j=0; j<pieces.size(); j++) {
@@ -637,6 +644,7 @@ public class SuperTetris implements MouseListener, KeyListener {
 
     private void clearBlocksWhenBlocksAreALine() {
         try {
+
             boolean needToClearLine = true;
             ArrayList<Integer> linesToClear = new ArrayList<Integer>();
 
@@ -763,8 +771,11 @@ public class SuperTetris implements MouseListener, KeyListener {
             case KeyEvent.VK_LEFT :
 
                 if(!juxtaposedRightSideways(pieces) && piece.blocks.get(0).x > 0 && piece.blocks.get(1).x > 0 && piece.blocks.get(2).x > 0 && piece.blocks.get(3).x > 0) {
+
                     piece.moveLeft();
                     this.redrawBlocks();
+
+                    putPiece();
                 }
 
                 break;
@@ -772,8 +783,11 @@ public class SuperTetris implements MouseListener, KeyListener {
             case KeyEvent.VK_RIGHT :
 
                 if(!juxtaposedLeftSideways(pieces) && piece.blocks.get(0).x < 9 && piece.blocks.get(1).x < 9 && piece.blocks.get(2).x < 9 && piece.blocks.get(3).x < 9) {
+
                     piece.moveRight();
                     this.redrawBlocks();
+
+                    putPiece();
                 }
 
                 break;
@@ -781,9 +795,12 @@ public class SuperTetris implements MouseListener, KeyListener {
             case KeyEvent.VK_SPACE :
 
                 while(isNotDown(piece) && !juxtaposedTopways(pieces)) {
+
                     piece.moveDown();
                 }
+
                 this.redrawBlocks();
+                putPiece();
 
                 break;
 
@@ -795,9 +812,10 @@ public class SuperTetris implements MouseListener, KeyListener {
 
                         piece.moveDown();
                         this.redrawBlocks();
+
+                        putPiece();
                     
                     }
-                
                 }
 
                 break;
@@ -806,69 +824,41 @@ public class SuperTetris implements MouseListener, KeyListener {
 
                 piece.flip();
                 this.redrawBlocks();
+                putPiece();
 
                 break;
 
             case KeyEvent.VK_ESCAPE :
-
                 System.exit(0);
-                
                 break;
-                
         }
-
-    }
-    public static void main(String args[]) {
-        final SuperTetris tetris = new SuperTetris();
-        tetris.oppGamePanel.setVisible(true);
-        tetris.oppLinesLbl.setText("Lines: " + tetris.oppLines);
-        tetris.gameFrame.setVisible(true);
-        System.out.println("wa iti ng..");
-        System.out.println("waiting...");
-        Thread t1 = new Thread(new Runnable() {
-            public void run() {
-                tetris.waitForAccept();
-                if(tetris.accept && tetris.connect) {
-                    tetris.play();
-                }
-            }
-        });
-        t1.start();
-        while(!tetris.accept || !tetris.connect) {
-        }
-        System.out.println("waafter iting...");
-        tetris.play();
-    }
-    public void keyTyped(KeyEvent e){}public void keyReleased(KeyEvent e){}
-
-    public void mouseClicked(MouseEvent me) {
     }
 
     public void mousePressed(MouseEvent me) {
 
-        if(me.getSource() == con) {
-            System.out.println("connecting...");
-            Thread t2 = new Thread(new Runnable() {
-                public void run() {
-                    connect();
-                    if(accept && connect) {
-                        play();
-                    }
-                }
-            });
-            t2.start();
-        }
-
         gameFrame.requestFocus();
 
+        if(me.getSource() == con) {
+
+            connect();
+        }
+
     }
 
-    public void mouseReleased(MouseEvent me) {
+    public void startTetris(SuperTetris tetris) {
+        
+        tetris.panel.setVisible(true);
+
+        tetris.gameFrame.setVisible(true);
+
+        tetris.waitForAccept();
     }
 
-    public void mouseEntered(MouseEvent me) {
-    }
+    public void keyTyped(KeyEvent e){}public void keyReleased(KeyEvent e){}
+    public void mouseClicked(MouseEvent me){}public void mouseReleased(MouseEvent me){}public void mouseEntered(MouseEvent me){}public void mouseExited(MouseEvent me){}
 
-    public void mouseExited(MouseEvent me) {
+    public static void main(String args[]) {
+        SuperTetris tetris = new SuperTetris();
+        tetris.startTetris(tetris);
     }
 }
