@@ -406,7 +406,7 @@ public class SuperTetris implements MouseListener, KeyListener {
             oppPieces.clear();
             String thethepiece = "";
             StringTokenizer stringTokenizer = new StringTokenizer(thegetpiece, System.getProperty("line.separator"));
-            //System.out.println(thepiece);
+            System.out.println("thegetpiece: " + thegetpiece + "\n\n");
             while(stringTokenizer.hasMoreElements()) {
                 thethepiece = stringTokenizer.nextToken();
                 StringTokenizer st = new StringTokenizer(thethepiece, ";");
