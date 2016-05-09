@@ -303,7 +303,7 @@ public class SuperTetris implements MouseListener, KeyListener {
                 }
             }
             System.out.println("put2 " + thepiece);
-            dOut.write(thepiece.getBytes());
+            dOut.writeBytes(thepiece);
             System.out.println("put " + thepiece);
             dOut.flush();
         } catch(Exception e) {
