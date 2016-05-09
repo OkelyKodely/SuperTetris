@@ -303,7 +303,7 @@ public class SuperTetris implements MouseListener, KeyListener {
                 }
             }
             System.out.println("put2 " + thepiece);
-            dOut.writeBytes(thepiece);
+            dOut.write(thepiece.getBytes());
             System.out.println("put " + thepiece);
             dOut.flush();
         } catch(Exception e) {
@@ -506,8 +506,19 @@ public class SuperTetris implements MouseListener, KeyListener {
                         opp_lines = String.valueOf(opp_lines.charAt(1));
                 }
 
-                System.out.println("sys " + opp_lines + ";");
+                
+                opp_lines = thegetpiece.substring(thegetpiece.length()-2, 2);
+                if(opp_lines.charAt(0) == ';') {
+                    if(opp_lines.length() == 2)
+                        opp_lines = String.valueOf(opp_lines.charAt(1));
+                }
+                if(opp_lines.charAt(0) == '0') {
+                    if(opp_lines.length() == 2)
+                        opp_lines = String.valueOf(opp_lines.charAt(1));
+                }
+                System.out.println("["+opp_lines+"]");
                 oppLines = Integer.valueOf(opp_lines);
+
                 oppLinesLbl.setText("Lines: " + oppLines);
                 oppPieces.add(oppPiece);
 
@@ -760,7 +771,7 @@ public class SuperTetris implements MouseListener, KeyListener {
 
         for(int i=0; i<oppPieces.size(); i++) {
 
-            oppGamePanel.drawPiece(pieces.get(i));
+            oppGamePanel.drawPiece(oppPieces.get(i));
         }
     }
 
