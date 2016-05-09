@@ -18,19 +18,19 @@ public class SuperTetris implements MouseListener, KeyListener {
 
         gameFrame.setLocation(width/2-225, 0);
 
-        gameFrame.setSize(1200, 790);
+        gameFrame.setSize(1200, 745);
 
         panel.setLocation(0, 0);
 
         panel.setBackground(Color.white);
 
-        panel.setSize(150, 790);
+        panel.setSize(150, 745);
 
         gameFrame.add(panel);
 
         gamePanel.setLocation(0, 0);
 
-        gamePanel.setSize(450, 790);
+        gamePanel.setSize(450, 745);
 
         mainPanel.add(gamePanel);
 
@@ -38,7 +38,7 @@ public class SuperTetris implements MouseListener, KeyListener {
 
         oppPanel.setBackground(Color.white);
 
-        oppPanel.setSize(150, 790);
+        oppPanel.setSize(150, 745);
 
         oppPanel.setLayout(null);
 
@@ -86,7 +86,7 @@ public class SuperTetris implements MouseListener, KeyListener {
 
         oppGamePanel.setLocation(600, 0);
 
-        oppGamePanel.setSize(450, 790);
+        oppGamePanel.setSize(450, 745);
 
         mainPanel.add(oppGamePanel);
 
@@ -94,7 +94,7 @@ public class SuperTetris implements MouseListener, KeyListener {
 
         mainPanel.setLocation(150, 0);
 
-        mainPanel.setSize(1050, 790);
+        mainPanel.setSize(1050, 745);
 
         gameFrame.add(mainPanel);
 
@@ -166,7 +166,7 @@ public class SuperTetris implements MouseListener, KeyListener {
 
     private JLabel oppLinesLbl = new JLabel("Lines: " + oppLines);
 
-    private int board[][] = new int[17][10];
+    private int board[][] = new int[16][10];
 
     private ArrayList<Piece> pieces = new ArrayList<Piece>();
 
@@ -191,13 +191,13 @@ public class SuperTetris implements MouseListener, KeyListener {
     private JPanel oppPanel = new JPanel();
 
     private boolean isNotDown(Piece piece) {
-       if(piece.blocks.get(0).y == 16
+       if(piece.blocks.get(0).y == 15
                 ||
-                piece.blocks.get(1).y == 16
+                piece.blocks.get(1).y == 15
                 ||
-                piece.blocks.get(2).y == 16
+                piece.blocks.get(2).y == 15
                 ||
-                piece.blocks.get(3).y == 16) {
+                piece.blocks.get(3).y == 15) {
            return false;
         }
         return true;
@@ -507,7 +507,7 @@ public class SuperTetris implements MouseListener, KeyListener {
                 }
 
                 
-                opp_lines = thegetpiece.substring(thegetpiece.length()-2, 2);
+                opp_lines = thegetpiece.substring(thegetpiece.length()-2, thegetpiece.length());
                 if(opp_lines.charAt(0) == ';') {
                     if(opp_lines.length() == 2)
                         opp_lines = String.valueOf(opp_lines.charAt(1));
@@ -659,7 +659,7 @@ public class SuperTetris implements MouseListener, KeyListener {
             boolean needToClearLine = true;
             ArrayList<Integer> linesToClear = new ArrayList<Integer>();
 
-            for(int y=0; y<17; y++) {
+            for(int y=0; y<16; y++) {
                 for(int x=0; x<10; x++) {
 
                     if(this.board[y][x] != 1) {
@@ -718,7 +718,7 @@ public class SuperTetris implements MouseListener, KeyListener {
                 }
             }
 
-            for(int i=0; i<17; i++) {
+            for(int i=0; i<16; i++) {
                 for(int j=0; j<10; j++) {
                     this.board[i][j] = 0;
                 }
