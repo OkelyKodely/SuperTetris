@@ -156,6 +156,8 @@ public class SuperTetris implements MouseListener, KeyListener {
     
     private String thepiece = "";
 
+    private String thegetpiece = "";
+
     private int lines = 0;
 
     private int oppLines = 0;
@@ -314,8 +316,8 @@ public class SuperTetris implements MouseListener, KeyListener {
             byte[] messageByte = new byte[1000];
             DataInputStream in = new DataInputStream(clientSocket.getInputStream());
             int bytesRead = in.read(messageByte);
-            thepiece = new String(messageByte, 0, bytesRead);
-            System.out.println("get " + thepiece);
+            thegetpiece = new String(messageByte, 0, bytesRead);
+            System.out.println("get " + thegetpiece);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -403,7 +405,7 @@ public class SuperTetris implements MouseListener, KeyListener {
 
             oppPieces.clear();
             String thethepiece = "";
-            StringTokenizer stringTokenizer = new StringTokenizer(thepiece, System.getProperty("line.separator"));
+            StringTokenizer stringTokenizer = new StringTokenizer(thegetpiece, System.getProperty("line.separator"));
             //System.out.println(thepiece);
             while(stringTokenizer.hasMoreElements()) {
                 thethepiece = stringTokenizer.nextToken();
