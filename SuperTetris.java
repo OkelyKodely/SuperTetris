@@ -16,7 +16,7 @@ public class SuperTetris implements MouseListener, KeyListener {
 
         int width = dimension.width;
 
-        gameFrame.setLocation(width/2-225, 0);
+        gameFrame.setLocation(width/2-600, 30);
 
         gameFrame.setSize(1200, 745);
 
@@ -42,41 +42,29 @@ public class SuperTetris implements MouseListener, KeyListener {
 
         oppPanel.setLayout(null);
 
+        JLabel ipAddy = new JLabel("Opponent IP Addy");
+
+        ipAddy.setSize(120, 20);
+
+        ipAddy.setLocation(10, 0);
+
         ip.setSize(120, 20);
 
         ip.setLocation(10, 20);
 
-        port_.setSize(120, 20);
-
-        port_.setLocation(10, 41);
-
-        port_server.setSize(120, 20);
-
-        port_server.setLocation(10, 62);
-
         con.setSize(120, 20);
 
-        con.setLocation(10, 83);
+        con.setLocation(10, 40);
 
         con.addMouseListener(this);
 
-        wait.setSize(120, 20);
-
-        wait.setLocation(10, 104);
-
-        wait.addMouseListener(this);
+        oppPanel.add(ipAddy);
 
         oppPanel.add(ip);
 
-        oppPanel.add(port_);
-
-        oppPanel.add(port_server);
-
         oppPanel.add(con);
 
-        oppPanel.add(wait);
-
-        oppLinesLbl.setLocation(10, 104);
+        oppLinesLbl.setLocation(10, 60);
 
         oppLinesLbl.setSize(150, 20);
 
@@ -131,10 +119,7 @@ public class SuperTetris implements MouseListener, KeyListener {
     }
 
     private JTextField ip = new JTextField();
-    private JTextField port_ = new JTextField();
-    private JTextField port_server = new JTextField();
-    private JButton wait = new JButton("wait.");
-    private JButton con = new JButton("connect.");
+    private JButton con = new JButton("Connect/Play");
 
     private ServerSocket serverSocket = null;
 
@@ -144,9 +129,7 @@ public class SuperTetris implements MouseListener, KeyListener {
 
     private String ipAddress = "x.x.x.x";
 
-    private int port = 2000;
-
-    private int serverport = 4000;
+    private int port = 5000;
 
     public boolean connect = false;
 
@@ -263,7 +246,6 @@ public class SuperTetris implements MouseListener, KeyListener {
     public void connect() {
         try {
             ipAddress = ip.getText();
-            port = Integer.valueOf(port_.getText());
             System.out.println(ipAddress + " " + port);
             socket = new Socket(ipAddress, port);
             dOut = new DataOutputStream(socket.getOutputStream());
@@ -277,9 +259,8 @@ public class SuperTetris implements MouseListener, KeyListener {
     public void waitForAccept() {
         try {
             System.out.println("waiti1");
-            serverport = Integer.valueOf(port_server.getText());
             System.out.println("waiti2");
-            serverSocket = new ServerSocket(serverport);
+            serverSocket = new ServerSocket(port);
             System.out.println("waiti3");
             clientSocket = serverSocket.accept();
             System.out.println("waiti4");
@@ -838,8 +819,21 @@ public class SuperTetris implements MouseListener, KeyListener {
 
     }
     public static void main(String args[]) {
-        SuperTetris tetris = new SuperTetris();
+        final SuperTetris tetris = new SuperTetris();
+        tetris.oppGamePanel.setVisible(true);
+        tetris.oppLinesLbl.setText("Lines: " + tetris.oppLines);
+        tetris.gameFrame.setVisible(true);
         System.out.println("wa iti ng..");
+        System.out.println("waiting...");
+        Thread t1 = new Thread(new Runnable() {
+            public void run() {
+                tetris.waitForAccept();
+                if(tetris.accept && tetris.connect) {
+                    tetris.play();
+                }
+            }
+        });
+        t1.start();
         while(!tetris.accept || !tetris.connect) {
         }
         System.out.println("waafter iting...");
@@ -851,19 +845,6 @@ public class SuperTetris implements MouseListener, KeyListener {
     }
 
     public void mousePressed(MouseEvent me) {
-
-        if(me.getSource() == wait) {
-            System.out.println("waiting...");
-            Thread t1 = new Thread(new Runnable() {
-                public void run() {
-                    waitForAccept();
-                    if(accept && connect) {
-                        play();
-                    }
-                }
-            });
-            t1.start();
-        }
 
         if(me.getSource() == con) {
             System.out.println("connecting...");
