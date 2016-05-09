@@ -1,17 +1,15 @@
+
 import java.util.*;
 
 public class Piece {
 
     public enum Direction {
+
         UP, DOWN, LEFT, RIGHT
     }
-
     Direction direction = Direction.UP;
-
     private String type = "line";
-
     public String setType = "";
-
     public ArrayList<Block> blocks = new ArrayList<Block>();
 
     public void setType(String setType) {
@@ -25,137 +23,137 @@ public class Piece {
     public Piece(String type) {
         this.type = type;
         Block block;
-        if(type.equals("line")) {
-                block = new Block();
-                block.x = 0;
-                block.y = 3;
-                blocks.add(block);
-                block = new Block();
-                block.x = 0;
-                block.y = 2;
-                blocks.add(block);
-                block = new Block();
-                block.x = 0;
-                block.y = 1;
-                blocks.add(block);
-                block = new Block();
-                block.x = 0;
-                block.y = 0;
-                blocks.add(block);
+        if (type.equals("line")) {
+            block = new Block();
+            block.x = 0;
+            block.y = 3;
+            blocks.add(block);
+            block = new Block();
+            block.x = 0;
+            block.y = 2;
+            blocks.add(block);
+            block = new Block();
+            block.x = 0;
+            block.y = 1;
+            blocks.add(block);
+            block = new Block();
+            block.x = 0;
+            block.y = 0;
+            blocks.add(block);
 
-        } else if(type.equals("square")) {
+        } else if (type.equals("square")) {
 
-                block = new Block();
-                block.x = 0;
-                block.y = 0;
-                blocks.add(block);
-                block = new Block();
-                block.x = 1;
-                block.y = 0;
-                blocks.add(block);
-                block = new Block();
-                block.x = 0;
-                block.y = 1;
-                blocks.add(block);
-                block = new Block();
-                block.x = 1;
-                block.y = 1;
-                blocks.add(block);
+            block = new Block();
+            block.x = 0;
+            block.y = 0;
+            blocks.add(block);
+            block = new Block();
+            block.x = 1;
+            block.y = 0;
+            blocks.add(block);
+            block = new Block();
+            block.x = 0;
+            block.y = 1;
+            blocks.add(block);
+            block = new Block();
+            block.x = 1;
+            block.y = 1;
+            blocks.add(block);
 
-        } else if(type.equals("LArm")) {
+        } else if (type.equals("LArm")) {
 
-                block = new Block();
-                block.x = 0;
-                block.y = 2;
-                blocks.add(block);
-                block = new Block();
-                block.x = -1;
-                block.y = 2;
-                blocks.add(block);
-                block = new Block();
-                block.x = 0;
-                block.y = 1;
-                blocks.add(block);
-                block = new Block();
-                block.x = 0;
-                block.y = 0;
-                blocks.add(block);
+            block = new Block();
+            block.x = 0;
+            block.y = 2;
+            blocks.add(block);
+            block = new Block();
+            block.x = -1;
+            block.y = 2;
+            blocks.add(block);
+            block = new Block();
+            block.x = 0;
+            block.y = 1;
+            blocks.add(block);
+            block = new Block();
+            block.x = 0;
+            block.y = 0;
+            blocks.add(block);
 
-        } else if(type.equals("RArm")) {
+        } else if (type.equals("RArm")) {
 
-                block = new Block();
-                block.x = 0;
-                block.y = 2;
-                blocks.add(block);
-                block = new Block();
-                block.x = 1;
-                block.y = 2;
-                blocks.add(block);
-                block = new Block();
-                block.x = 0;
-                block.y = 1;
-                blocks.add(block);
-                block = new Block();
-                block.x = 0;
-                block.y = 0;
-                blocks.add(block);
+            block = new Block();
+            block.x = 0;
+            block.y = 2;
+            blocks.add(block);
+            block = new Block();
+            block.x = 1;
+            block.y = 2;
+            blocks.add(block);
+            block = new Block();
+            block.x = 0;
+            block.y = 1;
+            blocks.add(block);
+            block = new Block();
+            block.x = 0;
+            block.y = 0;
+            blocks.add(block);
 
-        } else if(type.equals("Hat")) {
+        } else if (type.equals("Hat")) {
 
-                block = new Block();
-                block.x = 0;
-                block.y = 1;
-                blocks.add(block);
-                block = new Block();
-                block.x = -1;
-                block.y = 1;
-                blocks.add(block);
-                block = new Block();
-                block.x = 1;
-                block.y = 1;
-                blocks.add(block);
-                block = new Block();
-                block.x = -1;
-                block.y = 0;
-                blocks.add(block);
+            block = new Block();
+            block.x = 0;
+            block.y = 1;
+            blocks.add(block);
+            block = new Block();
+            block.x = -1;
+            block.y = 1;
+            blocks.add(block);
+            block = new Block();
+            block.x = 1;
+            block.y = 1;
+            blocks.add(block);
+            block = new Block();
+            block.x = -1;
+            block.y = 0;
+            blocks.add(block);
 
-        } else if(type.equals("LShoulder")) {
+        } else if (type.equals("LShoulder")) {
 
-                block = new Block();
-                block.x = 0;
-                block.y = 1;
-                blocks.add(block);
-                block = new Block();
-                block.x = -1;
-                block.y = 1;
-                blocks.add(block);
-                block = new Block();
-                block.x = 0;
-                block.y = 0;
-                blocks.add(block);
-                block = new Block();
-                block.x = 1;
-                block.y = 0;
-                blocks.add(block);
+            block = new Block();
+            block.x = 0;
+            block.y = 1;
+            blocks.add(block);
+            block = new Block();
+            block.x = -1;
+            block.y = 1;
+            blocks.add(block);
+            block = new Block();
+            block.x = 0;
+            block.y = 0;
+            blocks.add(block);
+            block = new Block();
+            block.x = 1;
+            block.y = 0;
+            blocks.add(block);
 
-        } else if(type.equals("RShoulder")) {
+        } else if (type.equals("RShoulder")) {
 
-                block = new Block();
-                block.x = 0;
-                block.y = 1;
-                blocks.add(block);
-                block = new Block();
-                block.x = 1;
-                block.y = 1;
-                blocks.add(block);
-                block = new Block();
-                block.x = 0;
-                block.y = 0;
-                blocks.add(block);
-                block = new Block();
-                block.x = -1;
-                block.y = 0;
-                blocks.add(block);
+            block = new Block();
+            block.x = 0;
+            block.y = 1;
+            blocks.add(block);
+            block = new Block();
+            block.x = 1;
+            block.y = 1;
+            blocks.add(block);
+            block = new Block();
+            block.x = 0;
+            block.y = 0;
+            blocks.add(block);
+            block = new Block();
+            block.x = -1;
+            block.y = 0;
+            blocks.add(block);
         }
     }
 
@@ -163,110 +161,110 @@ public class Piece {
 
         Block block;
 
-        if(type.equals("line")) {
+        if (type.equals("line")) {
 
-                block = blocks.get(0);
-                block.x = x;
-                block.y = y + 3;
-                block = blocks.get(1);
-                block.x = x;
-                block.y = y + 2;
-                block = blocks.get(2);
-                block.x = x;
-                block.y = y + 1;
-                block = blocks.get(3);
-                block.x = x;
-                block.y = y;
+            block = blocks.get(0);
+            block.x = x;
+            block.y = y + 3;
+            block = blocks.get(1);
+            block.x = x;
+            block.y = y + 2;
+            block = blocks.get(2);
+            block.x = x;
+            block.y = y + 1;
+            block = blocks.get(3);
+            block.x = x;
+            block.y = y;
 
-        } else if(type.equals("square")) {
+        } else if (type.equals("square")) {
 
-                block = blocks.get(0);
-                block.x = x;
-                block.y = y + 1;
-                block = blocks.get(1);
-                block.x = x + 1;
-                block.y = y + 1;
-                block = blocks.get(2);
-                block.x = x;
-                block.y = y;
-                block = blocks.get(3);
-                block.x = x + 1;
-                block.y = y;
+            block = blocks.get(0);
+            block.x = x;
+            block.y = y + 1;
+            block = blocks.get(1);
+            block.x = x + 1;
+            block.y = y + 1;
+            block = blocks.get(2);
+            block.x = x;
+            block.y = y;
+            block = blocks.get(3);
+            block.x = x + 1;
+            block.y = y;
 
-        } else if(type.equals("LArm")) {
+        } else if (type.equals("LArm")) {
 
-                block = blocks.get(0);
-                block.x = x;
-                block.y = y + 2;
-                block = blocks.get(1);
-                block.x = x - 1;
-                block.y = y + 2;
-                block = blocks.get(2);
-                block.x = x;
-                block.y = y + 1;
-                block = blocks.get(3);
-                block.x = x;
-                block.y = y;
+            block = blocks.get(0);
+            block.x = x;
+            block.y = y + 2;
+            block = blocks.get(1);
+            block.x = x - 1;
+            block.y = y + 2;
+            block = blocks.get(2);
+            block.x = x;
+            block.y = y + 1;
+            block = blocks.get(3);
+            block.x = x;
+            block.y = y;
 
-        } else if(type.equals("RArm")) {
+        } else if (type.equals("RArm")) {
 
-                block = blocks.get(0);
-                block.x = x;
-                block.y = y + 2;
-                block = blocks.get(1);
-                block.x = x + 1;
-                block.y = y + 2;
-                block = blocks.get(2);
-                block.x = x;
-                block.y = y + 1;
-                block = blocks.get(3);
-                block.x = x;
-                block.y = y;
-    
-        } else if(type.equals("Hat")) {
+            block = blocks.get(0);
+            block.x = x;
+            block.y = y + 2;
+            block = blocks.get(1);
+            block.x = x + 1;
+            block.y = y + 2;
+            block = blocks.get(2);
+            block.x = x;
+            block.y = y + 1;
+            block = blocks.get(3);
+            block.x = x;
+            block.y = y;
 
-                block = blocks.get(0);
-                block.x = x;
-                block.y = y + 1;
-                block = blocks.get(1);
-                block.x = x - 1;
-                block.y = y + 1;
-                block = blocks.get(2);
-                block.x = x + 1;
-                block.y = y + 1;
-                block = blocks.get(3);
-                block.x = x;
-                block.y = y;
+        } else if (type.equals("Hat")) {
 
-        } else if(type.equals("LShoulder")) {
+            block = blocks.get(0);
+            block.x = x;
+            block.y = y + 1;
+            block = blocks.get(1);
+            block.x = x - 1;
+            block.y = y + 1;
+            block = blocks.get(2);
+            block.x = x + 1;
+            block.y = y + 1;
+            block = blocks.get(3);
+            block.x = x;
+            block.y = y;
 
-                block = blocks.get(0);
-                block.x = x;
-                block.y = y + 1;
-                block = blocks.get(1);
-                block.x = x - 1;
-                block.y = y + 1;
-                block = blocks.get(2);
-                block.x = x;
-                block.y = y;
-                block = blocks.get(3);
-                block.x = x + 1;
-                block.y = y;
+        } else if (type.equals("LShoulder")) {
 
-        } else if(type.equals("RShoulder")) {
+            block = blocks.get(0);
+            block.x = x;
+            block.y = y + 1;
+            block = blocks.get(1);
+            block.x = x - 1;
+            block.y = y + 1;
+            block = blocks.get(2);
+            block.x = x;
+            block.y = y;
+            block = blocks.get(3);
+            block.x = x + 1;
+            block.y = y;
 
-                block = blocks.get(0);
-                block.x = x;
-                block.y = y + 1;
-                block = blocks.get(1);
-                block.x = x + 1;
-                block.y = y + 1;
-                block = blocks.get(2);
-                block.x = x;
-                block.y = y;
-                block = blocks.get(3);
-                block.x = x - 1;
-                block.y = y;
+        } else if (type.equals("RShoulder")) {
+
+            block = blocks.get(0);
+            block.x = x;
+            block.y = y + 1;
+            block = blocks.get(1);
+            block.x = x + 1;
+            block.y = y + 1;
+            block = blocks.get(2);
+            block.x = x;
+            block.y = y;
+            block = blocks.get(3);
+            block.x = x - 1;
+            block.y = y;
         }
     }
 
@@ -274,10 +272,10 @@ public class Piece {
 
         Block block;
 
-        if(direction == Direction.UP) {
+        if (direction == Direction.UP) {
 
 
-            if(type.equals("line")) {
+            if (type.equals("line")) {
 
 
                 direction = Direction.RIGHT;
@@ -291,7 +289,7 @@ public class Piece {
 
                 block.y -= 0;
 
-                
+
                 block = blocks.get(1);
 
 
@@ -314,14 +312,14 @@ public class Piece {
 
                 block.y += 3;
 
-                
-            } else if(type.equals("square")) {
 
-                
+            } else if (type.equals("square")) {
+
+
                 direction = Direction.RIGHT;
 
-            
-            } else if(type.equals("LArm")) {
+
+            } else if (type.equals("LArm")) {
 
 
                 direction = Direction.RIGHT;
@@ -358,7 +356,7 @@ public class Piece {
 
                 block.y += 2;
 
-            } else if(type.equals("RArm")) {
+            } else if (type.equals("RArm")) {
 
 
                 direction = Direction.RIGHT;
@@ -395,7 +393,7 @@ public class Piece {
 
                 block.y += 2;
 
-            } else if(type.equals("LShoulder")) {
+            } else if (type.equals("LShoulder")) {
 
 
                 direction = Direction.RIGHT;
@@ -432,7 +430,7 @@ public class Piece {
 
                 block.y += 2;
 
-            } else if(type.equals("RShoulder")) {
+            } else if (type.equals("RShoulder")) {
 
 
                 direction = Direction.RIGHT;
@@ -508,12 +506,10 @@ public class Piece {
 
             }
 
-        }
-
-        else if(direction == Direction.RIGHT) {
+        } else if (direction == Direction.RIGHT) {
 
 
-            if(type.equals("line")) {
+            if (type.equals("line")) {
 
 
                 direction = Direction.UP;
@@ -549,15 +545,15 @@ public class Piece {
                 block.x -= 3;
 
                 block.y -= 3;
-                
 
-            } else if(type.equals("square")) {
+
+            } else if (type.equals("square")) {
 
 
                 direction = Direction.DOWN;
 
-            
-            } else if(type.equals("LArm")) {
+
+            } else if (type.equals("LArm")) {
 
 
                 direction = Direction.DOWN;
@@ -594,7 +590,7 @@ public class Piece {
 
                 block.y += 2;
 
-            } else if(type.equals("RArm")) {
+            } else if (type.equals("RArm")) {
 
 
                 direction = Direction.DOWN;
@@ -631,8 +627,8 @@ public class Piece {
 
                 block.y += 2;
 
-            
-            } else if(type.equals("LShoulder")) {
+
+            } else if (type.equals("LShoulder")) {
 
 
                 direction = Direction.DOWN;
@@ -669,7 +665,7 @@ public class Piece {
 
                 block.y -= 0;
 
-            } else if(type.equals("RShoulder")) {
+            } else if (type.equals("RShoulder")) {
 
 
                 direction = Direction.DOWN;
@@ -745,19 +741,17 @@ public class Piece {
 
             }
 
-        }
-
-        else if(direction == Direction.DOWN) {
+        } else if (direction == Direction.DOWN) {
 
 
-            if(type.equals("square")) {
+            if (type.equals("square")) {
 
 
                 direction = Direction.LEFT;
-            
 
 
-            } else if(type.equals("LArm")) {
+
+            } else if (type.equals("LArm")) {
 
 
                 direction = Direction.LEFT;
@@ -794,7 +788,7 @@ public class Piece {
 
                 block.y -= 2;
 
-            } else if(type.equals("RArm")) {
+            } else if (type.equals("RArm")) {
 
 
                 direction = Direction.LEFT;
@@ -831,7 +825,7 @@ public class Piece {
 
                 block.y -= 2;
 
-            } else if(type.equals("LShoulder")) {
+            } else if (type.equals("LShoulder")) {
 
 
                 direction = Direction.LEFT;
@@ -868,7 +862,7 @@ public class Piece {
 
                 block.y -= 2;
 
-            } else if(type.equals("RShoulder")) {
+            } else if (type.equals("RShoulder")) {
 
 
                 direction = Direction.LEFT;
@@ -944,17 +938,15 @@ public class Piece {
 
             }
 
-        }
+        } else if (direction == Direction.LEFT) {
 
-        else if(direction == Direction.LEFT) {
-
-            if(type.equals("square")) {
+            if (type.equals("square")) {
 
 
                 direction = Direction.UP;
 
 
-            } else if(type.equals("LArm")) {
+            } else if (type.equals("LArm")) {
 
 
                 direction = Direction.UP;
@@ -992,7 +984,7 @@ public class Piece {
                 block.y -= 2;
 
 
-            } else if(type.equals("RArm")) {
+            } else if (type.equals("RArm")) {
 
 
                 direction = Direction.UP;
@@ -1029,7 +1021,7 @@ public class Piece {
 
                 block.y -= 2;
 
-            } else if(type.equals("LShoulder")) {
+            } else if (type.equals("LShoulder")) {
 
 
                 direction = Direction.UP;
@@ -1066,7 +1058,7 @@ public class Piece {
 
                 block.y += 0;
 
-            } else if(type.equals("RShoulder")) {
+            } else if (type.equals("RShoulder")) {
 
 
                 direction = Direction.UP;
@@ -1162,11 +1154,10 @@ public class Piece {
         block.y++;
 
         block = blocks.get(3);
-        
+
         block.y++;
 
     }
-
 
     public void moveLeft() {
 
@@ -1188,7 +1179,6 @@ public class Piece {
 
     }
 
-
     public void moveRight() {
 
         Block block = blocks.get(0);
@@ -1208,6 +1198,4 @@ public class Piece {
         block.x++;
 
     }
-
-
 }

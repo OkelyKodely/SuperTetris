@@ -496,7 +496,7 @@ public class SuperTetris implements MouseListener, KeyListener {
 
         while(stringTokenizer.hasMoreElements()) {
 
-         try {
+             try {
             thethepiece = stringTokenizer.nextToken().trim();
 
             StringTokenizer st = new StringTokenizer(thethepiece, ";");
@@ -523,48 +523,22 @@ public class SuperTetris implements MouseListener, KeyListener {
 
             String direction = "" + st.nextToken().trim() + "";
             String thetype = "" + st.nextToken().trim() + "";
-            String opp_lines = "";// + st.nextToken().trim() + "";
+            String opp_lines = "" + st.nextToken().trim() + "";
+
+            opp_lines = thegetpiece.substring(thegetpiece.length()-2, thegetpiece.length());
+            if(opp_lines.charAt(0) == ';') {
+                if(opp_lines.length() == 2)
+                    opp_lines = String.valueOf(opp_lines.charAt(1));
+            }
+            if(opp_lines.charAt(0) == '0') {
+                if(opp_lines.length() == 2)
+                    opp_lines = String.valueOf(opp_lines.charAt(1));
+            }
+            oppLines = Integer.valueOf(opp_lines);
+
+            oppLinesLbl.setText("Lines: " + oppLines);
 
             oppPiece = new Piece( "" + thetype );
-
-            block1x = "" + block1x.trim();
-            block1y = "" + block1y.trim();
-
-            if(block1x.charAt(0) == '0') {
-                if(block1x.length() == 2)
-                    block1x = String.valueOf(block1x.charAt(1));
-            }
-            if(block1y.charAt(0) == '0') {
-                if(block1y.length() == 2)
-                    block1y = String.valueOf(block1y.charAt(1));
-            }
-
-            if(block2x.charAt(0) == '0') {
-                if(block2x.length() == 2)
-                    block2x = String.valueOf(block2x.charAt(1));
-            }
-            if(block2y.charAt(0) == '0') {
-                if(block2y.length() == 2)
-                    block2y = String.valueOf(block2y.charAt(1));
-            }
-
-            if(block3x.charAt(0) == '0') {
-                if(block3x.length() == 2)
-                    block3x = String.valueOf(block3x.charAt(1));
-            }
-            if(block3y.charAt(0) == '0') {
-                if(block3y.length() == 2)
-                    block3y = String.valueOf(block3y.charAt(1));
-            }
-
-            if(block4x.charAt(0) == '0') {
-                if(block4x.length() == 2)
-                    block4x = String.valueOf(block4x.charAt(1));
-            }
-            if(block4y.charAt(0) == '0') {
-                if(block4y.length() == 2)
-                    block4y = String.valueOf(block4y.charAt(1));
-            }
 
             oppPiece.setLocation(Integer.valueOf(block1x), Integer.valueOf(block1y));
 
@@ -590,32 +564,9 @@ public class SuperTetris implements MouseListener, KeyListener {
             block.y = Integer.valueOf(block4y);
             oppPiece.blocks.add(block);
 
-
             oppPiece.setType("current");
 
-            /*
-            try {
-                opp_lines = thegetpiece.substring(thegetpiece.length()-2, thegetpiece.length());
-                if(opp_lines.charAt(0) == ';') {
-                    if(opp_lines.length() == 2)
-                        opp_lines = String.valueOf(opp_lines.charAt(1));
-                }
-                if(opp_lines.charAt(0) == '0') {
-                    if(opp_lines.length() == 2)
-                        opp_lines = String.valueOf(opp_lines.charAt(1));
-                }
-                try {
-                    oppLines = Integer.valueOf(opp_lines);
-                } catch(NumberFormatException nfe) {
-                }
-            } catch(Exception e) {
-            }
-
-            oppLinesLbl.setText("Lines: " + oppLines);
-            */
-
             oppPieces.add(oppPiece);
-
 
             direction = direction.trim();
 

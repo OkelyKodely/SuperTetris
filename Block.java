@@ -1,7 +1,5 @@
-public
-class
-Block
-{
-int
-x,y;
+
+public class Block {
+
+    public int x, y;
 }
