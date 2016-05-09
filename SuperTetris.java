@@ -303,7 +303,7 @@ public class SuperTetris implements MouseListener, KeyListener {
                 }
             }
             System.out.println("put2 " + thepiece);
-            dOut.writeBytes(thepiece);
+            dOut.write(thepiece.getBytes());
             System.out.println("put " + thepiece);
             dOut.flush();
         } catch(Exception e) {
@@ -403,57 +403,74 @@ public class SuperTetris implements MouseListener, KeyListener {
 
             getPiece();
 
+            System.out.println("thegetpiece: " + thegetpiece + "\n\n");
             oppPieces.clear();
             String thethepiece = "";
             StringTokenizer stringTokenizer = new StringTokenizer(thegetpiece, System.getProperty("line.separator"));
-            System.out.println("thegetpiece: " + thegetpiece + "\n\n");
             while(stringTokenizer.hasMoreElements()) {
-                thethepiece = stringTokenizer.nextToken();
+                thethepiece = stringTokenizer.nextToken().trim();
                 StringTokenizer st = new StringTokenizer(thethepiece, ";");
-                String block1x = st.nextToken();
+                String block1x = st.nextToken().trim() + "";
                 StringTokenizer st2 = new StringTokenizer(block1x, ",");
-                block1x = st2.nextToken();
-                String block1y = st2.nextToken();
-                String block2x = st.nextToken();
+                block1x = st2.nextToken().trim() + "";
+                String block1y = "" + st2.nextToken().trim() + "";
+                String block2x = "" + st.nextToken().trim() + "";
                 st2 = new StringTokenizer(block2x, ",");
-                block2x = st2.nextToken();
-                String block2y = st2.nextToken();
-                String block3x = st.nextToken();
+                block2x = "" + st2.nextToken().trim() + "";
+                String block2y = "" + st2.nextToken().trim() + "";
+                String block3x = "" + st.nextToken().trim() + "";
                 st2 = new StringTokenizer(block3x, ",");
-                block3x = st2.nextToken();
-                String block3y = st2.nextToken();
-                String block4x = st.nextToken();
+                block3x = "" + st2.nextToken().trim() + "";
+                String block3y = "" + st2.nextToken().trim() + "";
+                String block4x = "" + st.nextToken().trim() + "";
                 st2 = new StringTokenizer(block4x, ",");
-                block4x = st2.nextToken();
-                String block4y = st2.nextToken();
-                String direction = st.nextToken();
-                String thetype = st.nextToken();
-                String opp_lines = st.nextToken();
+                block4x = "" + st2.nextToken().trim() + "";
+                String block4y = "" + st2.nextToken().trim() + "";
+                String direction = "" + st.nextToken().trim() + "";
+                String thetype = "" + st.nextToken().trim() + "";
+                String opp_lines = "" + st.nextToken().trim() + "";
 
                 oppPiece = new Piece( "" + thetype );
+
+                block1x = "" + block1x.trim();
+                block1y = "" + block1y.trim();
+
+                System.out.println(block1x.trim() + "" + "--");
+                System.out.println(block1y.trim() + "" + "--]");
+
+                oppPiece.setLocation(Integer.valueOf(block1x), Integer.valueOf(block1y));
+
+                oppPiece.blocks.clear();
+
+                Block block = new Block();
+                block.x = Integer.valueOf(block1x);
+                block.y = Integer.valueOf(block1y);
+                oppPiece.blocks.add(block);
+
+                block = new Block();
+                block.x = Integer.valueOf(block2x);
+                block.y = Integer.valueOf(block2y);
+                oppPiece.blocks.add(block);
+
+                block = new Block();
+                block.x = Integer.valueOf(block3x);
+                block.y = Integer.valueOf(block3y);
+                oppPiece.blocks.add(block);
+
+                block = new Block();
+                block.x = Integer.valueOf(block4x);
+                block.y = Integer.valueOf(block4y);
+                oppPiece.blocks.add(block);
+
+
+                oppPiece.setType("current");
+
+
+                System.out.println("sys " + opp_lines + ";");
                 oppLines = Integer.valueOf(opp_lines);
                 oppLinesLbl.setText("Lines: " + oppLines);
                 oppPieces.add(oppPiece);
 
-                oppPiece.setLocation(Integer.valueOf(block1x), Integer.valueOf(block1y));
-
-                oppPiece.blocks.get(0).x = Integer.valueOf(block1x);
-
-                oppPiece.blocks.get(0).y = Integer.valueOf(block1y);
-
-                oppPiece.blocks.get(1).x = Integer.valueOf(block2x);
-
-                oppPiece.blocks.get(1).y = Integer.valueOf(block2y);
-
-                oppPiece.blocks.get(2).x = Integer.valueOf(block3x);
-
-                oppPiece.blocks.get(2).y = Integer.valueOf(block3y);
-
-                oppPiece.blocks.get(3).x = Integer.valueOf(block4x);
-
-                oppPiece.blocks.get(3).y = Integer.valueOf(block4y);
-
-                oppPiece.setType("current");
 
                 direction = direction.trim();
 
