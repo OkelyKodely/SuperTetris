@@ -291,7 +291,7 @@ public class SuperTetris implements MouseListener, KeyListener {
 
     public void putPiece() {
         try {
-            String thepiece = "";
+            thepiece = "";
             for(int i=0; i<pieces.size(); i++) {
                 String val = System.getProperty("line.separator");
                 if(i == pieces.size() - 1) {
