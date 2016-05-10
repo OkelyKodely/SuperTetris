@@ -694,7 +694,7 @@ public class SuperTetris implements MouseListener, KeyListener {
                     while(true) {
                         redrawBlocks();
                         redrawOppBlocks();
-                        Thread.sleep(50);
+                        Thread.sleep(150);
                         g1.drawImage(image1, x1, 0, gamePanel.getWidth(), gamePanel.getHeight(), null);
                         g1.drawImage(image2, x2, 0, gamePanel.getWidth(), gamePanel.getHeight(), null);
                         g2.drawImage(image1, x1, 0, oppGamePanel.getWidth(), oppGamePanel.getHeight(), null);
@@ -714,6 +714,8 @@ public class SuperTetris implements MouseListener, KeyListener {
 
     public void redrawBlocks() {
 
+        ////gamePanel.paintComponent(gamePanel.getGraphics());
+
         for(int i=0; i<pieces.size(); i++) {
 
             gamePanel.drawPiece(pieces.get(i));
@@ -721,6 +723,8 @@ public class SuperTetris implements MouseListener, KeyListener {
     }
 
     public void redrawOppBlocks() {
+
+        ////oppGamePanel.paintComponent(oppGamePanel.getGraphics());
 
         for(int i=0; i<oppPieces.size(); i++) {
 
