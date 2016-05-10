@@ -714,10 +714,6 @@ public class SuperTetris implements MouseListener, KeyListener {
 
     public void redrawBlocks() {
 
-        //gamePanel.paintComponent(gamePanel.getGraphics());
-
-        //gamePanel.setPanel(gamePanel);
-
         for(int i=0; i<pieces.size(); i++) {
 
             gamePanel.drawPiece(pieces.get(i));
@@ -725,10 +721,6 @@ public class SuperTetris implements MouseListener, KeyListener {
     }
 
     public void redrawOppBlocks() {
-
-        //gamePanel.paintComponent(oppGamePanel.getGraphics());
-
-        //gamePanel.setPanel(oppGamePanel);
 
         for(int i=0; i<oppPieces.size(); i++) {
 
@@ -764,6 +756,7 @@ public class SuperTetris implements MouseListener, KeyListener {
 
                 break;
 
+                /* problem with redrawing piece*//*
             case KeyEvent.VK_SPACE :
 
                 while(isNotDown(piece) && !juxtaposedTopways(pieces)) {
@@ -774,7 +767,7 @@ public class SuperTetris implements MouseListener, KeyListener {
                 this.redrawBlocks();
                 putPiece();
 
-                break;
+                break;*/
 
             case KeyEvent.VK_DOWN :
 
