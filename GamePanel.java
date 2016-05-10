@@ -5,6 +5,12 @@ import javax.swing.*;
 
 public class GamePanel extends JPanel {
 
+    private ArrayList<Block> blocks = null;
+    private ImageIcon imageIcon1 = new ImageIcon(this.getClass().getResource("/1.gif"));
+    private ImageIcon imageIcon2 = new ImageIcon(this.getClass().getResource("/2.gif"));
+    private ImageIcon imageIcon3 = new ImageIcon(this.getClass().getResource("/3.gif"));
+    private ImageIcon imageIcon4 = new ImageIcon(this.getClass().getResource("/4.gif"));
+    private Image image[] = new Image[4];
     private Graphics g;
     private GamePanel gamePanel;
 
@@ -29,14 +35,7 @@ public class GamePanel extends JPanel {
 
     public void drawPiece(Piece piece) {
 
-        ArrayList<Block> blocks = piece.blocks;
-
-        ImageIcon imageIcon1 = new ImageIcon(this.getClass().getResource("/1.gif"));
-        ImageIcon imageIcon2 = new ImageIcon(this.getClass().getResource("/2.gif"));
-        ImageIcon imageIcon3 = new ImageIcon(this.getClass().getResource("/3.gif"));
-        ImageIcon imageIcon4 = new ImageIcon(this.getClass().getResource("/4.gif"));
-
-        Image image[] = new Image[4];
+        blocks = piece.blocks;
 
         ArrayList<Integer> list = new ArrayList<Integer>();
         for (int i = 1; i <= 4; i++) {

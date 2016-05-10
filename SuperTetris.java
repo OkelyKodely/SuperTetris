@@ -53,7 +53,7 @@ public class SuperTetris implements MouseListener, KeyListener {
 
     private int delay = 2000;
 
-    private JFrame gameFrame = new JFrame("SuperTetris (Open/forward port 5000 in/on firewall/router!");
+    private JFrame gameFrame = new JFrame("SuperTetris (Open/forward port 5000 in/on the firewall/router)");
 
     private JPanel mainPanel = new JPanel();
 
@@ -80,7 +80,7 @@ public class SuperTetris implements MouseListener, KeyListener {
         panel.add(linesLbl);
         panel.setLayout(null);
         panel.setLocation(0, 0);
-        panel.setBackground(Color.white);
+        panel.setBackground(new Color(145, 22, 22));
         panel.setSize(150, 745);
 
         gameFrame.add(panel);
@@ -91,7 +91,7 @@ public class SuperTetris implements MouseListener, KeyListener {
         mainPanel.add(gamePanel);
 
         oppPanel.setLocation(450, 0);
-        oppPanel.setBackground(Color.white);
+        oppPanel.setBackground(new Color(175, 52, 52));
         oppPanel.setSize(150, 745);
         oppPanel.setLayout(null);
 
@@ -479,8 +479,6 @@ public class SuperTetris implements MouseListener, KeyListener {
 
             linesLbl.setText("Lines: " + lines);
 
-            this.redrawBlocks();
-
         }
     }
 
@@ -583,7 +581,6 @@ public class SuperTetris implements MouseListener, KeyListener {
          }
 
         }
-        this.redrawOppBlocks();
 
     }
 
@@ -682,19 +679,44 @@ public class SuperTetris implements MouseListener, KeyListener {
         }
     }
 
+    private void animate() {
+        Thread t1 = new Thread(new Runnable() {
+            public void run() {
+                try {
+                    ImageIcon imageIcon1 = new ImageIcon(this.getClass().getResource("/tetris.jpg"));
+                    Image image1 = imageIcon1.getImage();
+                    ImageIcon imageIcon2 = new ImageIcon(image1);
+                    Image image2 = imageIcon2.getImage();
+                    Graphics g1 = gamePanel.getGraphics();
+                    Graphics g2 = oppGamePanel.getGraphics();
+                    int x1 = gamePanel.getWidth();
+                    int x2 = 0;
+                    while(true) {
+                        redrawBlocks();
+                        redrawOppBlocks();
+                        Thread.sleep(50);
+                        g1.drawImage(image1, x1, 0, gamePanel.getWidth(), gamePanel.getHeight(), null);
+                        g1.drawImage(image2, x2, 0, gamePanel.getWidth(), gamePanel.getHeight(), null);
+                        g2.drawImage(image1, x1, 0, oppGamePanel.getWidth(), oppGamePanel.getHeight(), null);
+                        g2.drawImage(image2, x2, 0, oppGamePanel.getWidth(), oppGamePanel.getHeight(), null);
+                        x1--;
+                        x2--;
+                        if(x1 == 0 && x2 == -gamePanel.getWidth()) {
+                            x1 = gamePanel.getWidth();
+                            x2 = 0;
+                        }
+                    }
+                } catch(Exception e) {}
+            }
+        });
+        t1.start();
+    }
+
     public void redrawBlocks() {
 
-        gamePanel.paintComponent(gamePanel.getGraphics());
+        //gamePanel.paintComponent(gamePanel.getGraphics());
 
-        gamePanel.setPanel(gamePanel);
-
-        ImageIcon imageIcon = new ImageIcon(this.getClass().getResource("/tetris.jpg"));
-
-        Image image = imageIcon.getImage();
-
-        Graphics g = gamePanel.getGraphics();
-
-        g.drawImage(image, 0, 0, gamePanel.getWidth(), gamePanel.getHeight(), null);
+        //gamePanel.setPanel(gamePanel);
 
         for(int i=0; i<pieces.size(); i++) {
 
@@ -704,17 +726,9 @@ public class SuperTetris implements MouseListener, KeyListener {
 
     public void redrawOppBlocks() {
 
-        gamePanel.paintComponent(oppGamePanel.getGraphics());
+        //gamePanel.paintComponent(oppGamePanel.getGraphics());
 
-        gamePanel.setPanel(oppGamePanel);
-
-        ImageIcon imageIcon = new ImageIcon(this.getClass().getResource("/tetris.jpg"));
-
-        Image image = imageIcon.getImage();
-
-        Graphics g = oppGamePanel.getGraphics();
-
-        g.drawImage(image, 0, 0, oppGamePanel.getWidth(), oppGamePanel.getHeight(), null);
+        //gamePanel.setPanel(oppGamePanel);
 
         for(int i=0; i<oppPieces.size(); i++) {
 
@@ -806,6 +820,8 @@ public class SuperTetris implements MouseListener, KeyListener {
     public void startTetris(SuperTetris tetris) {
         
         tetris.panel.setVisible(true);
+
+        animate();
 
         tetris.gameFrame.setVisible(true);
 
