@@ -71,7 +71,7 @@ public class SuperTetris implements MouseListener, KeyListener {
         int width = dimension.width;
 
         gameFrame.setLayout(null);
-        gameFrame.setLocation(width/2-600, 30);
+        gameFrame.setLocation(width/2-600, 25);
         gameFrame.setSize(1200, 745);
 
         linesLbl.setLocation(10, 0);
@@ -694,7 +694,7 @@ public class SuperTetris implements MouseListener, KeyListener {
                     while(true) {
                         redrawBlocks();
                         redrawOppBlocks();
-                        Thread.sleep(30);
+                        Thread.sleep(10);
                         g1.drawImage(image1, x1, 0, gamePanel.getWidth(), gamePanel.getHeight(), null);
                         g1.drawImage(image2, x2, 0, gamePanel.getWidth(), gamePanel.getHeight(), null);
                         g2.drawImage(image1, x1, 0, oppGamePanel.getWidth(), oppGamePanel.getHeight(), null);
