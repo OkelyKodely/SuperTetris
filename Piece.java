@@ -23,7 +23,8 @@ public class Piece {
     public Piece(String type) {
         this.type = type;
         Block block;
-        if (type.equals("line")) {
+        if ("line".contains(type)) {
+            this.type = "line";
             block = new Block();
             block.x = 0;
             block.y = 3;
@@ -41,8 +42,8 @@ public class Piece {
             block.y = 0;
             blocks.add(block);
 
-        } else if (type.equals("square")) {
-
+        } else if ("square".contains(type)) {
+            this.type = "square";
             block = new Block();
             block.x = 0;
             block.y = 0;
@@ -60,8 +61,8 @@ public class Piece {
             block.y = 1;
             blocks.add(block);
 
-        } else if (type.equals("LArm")) {
-
+        } else if ("LArm".contains(type)) {
+            this.type = "LArm";
             block = new Block();
             block.x = 0;
             block.y = 2;
@@ -79,8 +80,8 @@ public class Piece {
             block.y = 0;
             blocks.add(block);
 
-        } else if (type.equals("RArm")) {
-
+        } else if ("RArm".contains(type)) {
+            this.type = "RArm";
             block = new Block();
             block.x = 0;
             block.y = 2;
@@ -98,8 +99,8 @@ public class Piece {
             block.y = 0;
             blocks.add(block);
 
-        } else if (type.equals("Hat")) {
-
+        } else if ("Hat".contains(type)) {
+            this.type = "Hat";
             block = new Block();
             block.x = 0;
             block.y = 1;
@@ -117,8 +118,8 @@ public class Piece {
             block.y = 0;
             blocks.add(block);
 
-        } else if (type.equals("LShoulder")) {
-
+        } else if ("LShoulder".contains(type)) {
+            this.type = "LShoulder";
             block = new Block();
             block.x = 0;
             block.y = 1;
@@ -136,8 +137,8 @@ public class Piece {
             block.y = 0;
             blocks.add(block);
 
-        } else if (type.equals("RShoulder")) {
-
+        } else if ("RShoulder".contains(type)) {
+            this.type = "RShoulder";
             block = new Block();
             block.x = 0;
             block.y = 1;

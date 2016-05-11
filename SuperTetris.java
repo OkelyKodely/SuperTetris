@@ -270,11 +270,11 @@ public class SuperTetris implements MouseListener, KeyListener {
 
             thepiece = "";
             for(int i=0; i<pieces.size(); i++) {
-                String val = System.getProperty("line.separator");
+                String val = "|";
                 if(i == pieces.size() - 1) {
-                    thepiece += pieces.get(i).blocks.get(0).x + "," + pieces.get(i).blocks.get(0).y + ";" + pieces.get(i).blocks.get(1).x + "," + pieces.get(i).blocks.get(1).y + ";" + pieces.get(i).blocks.get(2).x + "," + pieces.get(i).blocks.get(2).y + ";" + pieces.get(i).blocks.get(3).x + "," + pieces.get(i).blocks.get(3).y + ";" + pieces.get(i).direction + ";" + pieces.get(i).getType() + ";" + lines;
+                    thepiece += String.valueOf(pieces.get(i).blocks.get(0).x).trim() + "," + String.valueOf(pieces.get(i).blocks.get(0).y).trim() + ";" + String.valueOf(pieces.get(i).blocks.get(1).x) + "," + String.valueOf(pieces.get(i).blocks.get(1).y).trim() + ";" + String.valueOf(pieces.get(i).blocks.get(2).x).trim() + "," + String.valueOf(pieces.get(i).blocks.get(2).y).trim() + ";" + String.valueOf(pieces.get(i).blocks.get(3).x).trim() + "," + String.valueOf(pieces.get(i).blocks.get(3).y).trim() + ";" + pieces.get(i).direction.toString().trim() + ";" + pieces.get(i).getType().trim() + ";" + String.valueOf(lines).trim();
                 } else {
-                    thepiece += pieces.get(i).blocks.get(0).x + "," + pieces.get(i).blocks.get(0).y + ";" + pieces.get(i).blocks.get(1).x + "," + pieces.get(i).blocks.get(1).y + ";" + pieces.get(i).blocks.get(2).x + "," + pieces.get(i).blocks.get(2).y + ";" + pieces.get(i).blocks.get(3).x + "," + pieces.get(i).blocks.get(3).y + ";" + pieces.get(i).direction + ";" + pieces.get(i).getType() + ";" + lines + val;
+                    thepiece += String.valueOf(pieces.get(i).blocks.get(0).x).trim() + "," + String.valueOf(pieces.get(i).blocks.get(0).y).trim() + ";" + String.valueOf(pieces.get(i).blocks.get(1).x) + "," + String.valueOf(pieces.get(i).blocks.get(1).y).trim() + ";" + String.valueOf(pieces.get(i).blocks.get(2).x).trim() + "," + String.valueOf(pieces.get(i).blocks.get(2).y).trim() + ";" + String.valueOf(pieces.get(i).blocks.get(3).x).trim() + "," + String.valueOf(pieces.get(i).blocks.get(3).y).trim() + ";" + pieces.get(i).direction.toString().trim() + ";" + pieces.get(i).getType().trim() + ";" + String.valueOf(lines).trim() + val;
                 }
             }
             dos.write(thepiece.getBytes());
@@ -288,7 +288,7 @@ public class SuperTetris implements MouseListener, KeyListener {
     public void getOppPiece() {
         try {
 
-            byte[] messageByte = new byte[1000];
+            byte[] messageByte = new byte[10000]; // /
             DataInputStream in = new DataInputStream(clientSocket.getInputStream());
             int bytesRead = in.read(messageByte);
             thegetpiece = new String(messageByte, 0, bytesRead);
@@ -490,7 +490,7 @@ public class SuperTetris implements MouseListener, KeyListener {
 
         String thethepiece = "";
 
-        StringTokenizer stringTokenizer = new StringTokenizer(thegetpiece, System.getProperty("line.separator"));
+        StringTokenizer stringTokenizer = new StringTokenizer(thegetpiece, "|");
 
         while(stringTokenizer.hasMoreElements()) {
 
@@ -522,7 +522,7 @@ public class SuperTetris implements MouseListener, KeyListener {
             String direction = "" + st.nextToken().trim() + "";
             String thetype = "" + st.nextToken().trim() + "";
             String opp_lines = "" + st.nextToken().trim() + "";
-
+//
             opp_lines = thegetpiece.substring(thegetpiece.length()-2, thegetpiece.length());
             if(opp_lines.charAt(0) == ';') {
                 if(opp_lines.length() == 2)
@@ -644,7 +644,7 @@ public class SuperTetris implements MouseListener, KeyListener {
                     for(int j=0; j<pieces.get(i).blocks.size(); j++) {
                         if(pieces.get(i).blocks.get(j).y == linesToClear.get(h)) {
 
-                            pieces.get(i).blocks.get(j).y = 1000;
+                            pieces.get(i).blocks.get(j).y = 10000;
 
                         }
                     }
@@ -669,7 +669,7 @@ public class SuperTetris implements MouseListener, KeyListener {
             }
             for(int i=0; i<pieces.size(); i++) {
                 for(int j=0; j<pieces.get(i).blocks.size(); j++) {
-                    if(pieces.get(i).blocks.get(j).y != 1000) {
+                    if(pieces.get(i).blocks.get(j).y != 10000) {
                         this.board[pieces.get(i).blocks.get(j).y][pieces.get(i).blocks.get(j).x] = 1;
                     }
                 }
@@ -694,7 +694,7 @@ public class SuperTetris implements MouseListener, KeyListener {
                     while(true) {
                         redrawBlocks();
                         redrawOppBlocks();
-                        Thread.sleep(150);
+                        Thread.sleep(30);
                         g1.drawImage(image1, x1, 0, gamePanel.getWidth(), gamePanel.getHeight(), null);
                         g1.drawImage(image2, x2, 0, gamePanel.getWidth(), gamePanel.getHeight(), null);
                         g2.drawImage(image1, x1, 0, oppGamePanel.getWidth(), oppGamePanel.getHeight(), null);
@@ -714,8 +714,6 @@ public class SuperTetris implements MouseListener, KeyListener {
 
     public void redrawBlocks() {
 
-        ////gamePanel.paintComponent(gamePanel.getGraphics());
-
         for(int i=0; i<pieces.size(); i++) {
 
             gamePanel.drawPiece(pieces.get(i));
@@ -723,8 +721,6 @@ public class SuperTetris implements MouseListener, KeyListener {
     }
 
     public void redrawOppBlocks() {
-
-        ////oppGamePanel.paintComponent(oppGamePanel.getGraphics());
 
         for(int i=0; i<oppPieces.size(); i++) {
 
@@ -759,19 +755,6 @@ public class SuperTetris implements MouseListener, KeyListener {
                 }
 
                 break;
-
-                /* problem with redrawing piece*//*
-            case KeyEvent.VK_SPACE :
-
-                while(isNotDown(piece) && !juxtaposedTopways(pieces)) {
-
-                    piece.moveDown();
-                }
-
-                this.redrawBlocks();
-                putPiece();
-
-                break;*/
 
             case KeyEvent.VK_DOWN :
 
