@@ -5,9 +5,7 @@ import javax.swing.*;
 import java.io.*;
 import java.net.*;
 
-
 public class SuperTetris implements MouseListener, KeyListener {
-
     
     private JTextField host = new JTextField();
 
@@ -76,11 +74,12 @@ public class SuperTetris implements MouseListener, KeyListener {
 
         linesLbl.setLocation(10, 0);
         linesLbl.setSize(150, 20);
+        linesLbl.setForeground(Color.WHITE);
 
         panel.setLayout(null);
         panel.add(linesLbl);
         panel.setLocation(0, 0);
-        panel.setBackground(new Color(145, 22, 22));
+        panel.setBackground(Color.BLACK);
         panel.setSize(150, 745);
         panel.setDoubleBuffered(true);
 
@@ -93,13 +92,14 @@ public class SuperTetris implements MouseListener, KeyListener {
 
         oppPanel.setLayout(null);
         oppPanel.setLocation(450, 0);
-        oppPanel.setBackground(new Color(175, 52, 52));
+        oppPanel.setBackground(Color.BLACK);
         oppPanel.setSize(150, 745);
         oppPanel.setDoubleBuffered(true);
 
         JLabel oppHostName = new JLabel("Opp hostName");
         oppHostName.setSize(120, 20);
         oppHostName.setLocation(10, 0);
+        oppHostName.setForeground(Color.WHITE);
 
         host.setSize(120, 20);
         host.setLocation(10, 20);
@@ -114,6 +114,7 @@ public class SuperTetris implements MouseListener, KeyListener {
 
         oppLinesLbl.setLocation(10, 60);
         oppLinesLbl.setSize(150, 20);
+        oppLinesLbl.setForeground(Color.WHITE);
 
         oppPanel.add(oppLinesLbl);
 
@@ -290,7 +291,7 @@ public class SuperTetris implements MouseListener, KeyListener {
     public void getOppPiece() {
         try {
 
-            byte[] messageByte = new byte[10000]; // /
+            byte[] messageByte = new byte[10000];
             DataInputStream in = new DataInputStream(clientSocket.getInputStream());
             int bytesRead = in.read(messageByte);
             thegetpiece = new String(messageByte, 0, bytesRead);
@@ -381,6 +382,8 @@ public class SuperTetris implements MouseListener, KeyListener {
             } catch(Exception e) {}
 
             putPiece();
+
+            redrawAllBlocks();
 
             if(isNotDown(piece) && !juxtaposedTopways(pieces)) {
 
@@ -524,16 +527,7 @@ public class SuperTetris implements MouseListener, KeyListener {
             String direction = "" + st.nextToken().trim() + "";
             String thetype = "" + st.nextToken().trim() + "";
             String opp_lines = "" + st.nextToken().trim() + "";
-//
-            opp_lines = thegetpiece.substring(thegetpiece.length()-2, thegetpiece.length());
-            if(opp_lines.charAt(0) == ';') {
-                if(opp_lines.length() == 2)
-                    opp_lines = String.valueOf(opp_lines.charAt(1));
-            }
-            if(opp_lines.charAt(0) == '0') {
-                if(opp_lines.length() == 2)
-                    opp_lines = String.valueOf(opp_lines.charAt(1));
-            }
+
             oppLines = Integer.valueOf(opp_lines);
 
             oppLinesLbl.setText("Lines: " + oppLines);
@@ -582,15 +576,12 @@ public class SuperTetris implements MouseListener, KeyListener {
          } catch(Exception e) {
          }
 
-         redrawAllBlocks();
-
         }
-
     }
 
     private void redrawAllBlocks() {
 
-        animate();
+        drawBackground();
 
         redrawBlocks();
 
@@ -692,35 +683,21 @@ public class SuperTetris implements MouseListener, KeyListener {
         }
     }
 
-    private void animate() {
+    private void drawBackground() {
         try {
-            ImageIcon imageIcon1 = new ImageIcon(this.getClass().getResource("/tetris.jpg"));
-            Image image1 = imageIcon1.getImage();
-            ImageIcon imageIcon2 = new ImageIcon(image1);
-            Image image2 = imageIcon2.getImage();
-            Graphics g1 = gamePanel.getGraphics();
-            Graphics g2 = oppGamePanel.getGraphics();
-            //int x1 = gamePanel.getWidth();
-            int x2 = 0;
-            //while(true) {
-                //Thread.sleep(10);
-                //g1.drawImage(image1, x1, 0, gamePanel.getWidth(), gamePanel.getHeight(), null);
-                g1.drawImage(image2, x2, 0, gamePanel.getWidth(), gamePanel.getHeight(), null);
-                //g2.drawImage(image1, x1, 0, oppGamePanel.getWidth(), oppGamePanel.getHeight(), null);
-                g2.drawImage(image2, x2, 0, oppGamePanel.getWidth(), oppGamePanel.getHeight(), null);
-                //x1--;
-                //x2--;
-                //if(x1 == 0 && x2 == -gamePanel.getWidth()) {
-                //    x1 = gamePanel.getWidth();
-                //    x2 = 0;
-                //}
-            //}
+            ImageIcon imageIcon;
+            imageIcon = new ImageIcon(this.getClass().getResource("/tetris.gif"));
+            Image image;
+            image = imageIcon.getImage();
+            Graphics g;
+            g = gamePanel.getGraphics();
+            g.drawImage(image, 0, 0, gamePanel.getWidth(), gamePanel.getHeight(), null);
+            g = oppGamePanel.getGraphics();
+            g.drawImage(image, 0, 0, oppGamePanel.getWidth(), oppGamePanel.getHeight(), null);
         } catch(Exception e) {}
     }
 
     public void redrawBlocks() {
-
-        //gamePanel.paintComponent(gamePanel.getGraphics());
 
         for(int i=0; i<pieces.size(); i++) {
 
@@ -729,8 +706,6 @@ public class SuperTetris implements MouseListener, KeyListener {
     }
 
     public void redrawOppBlocks() {
-
-        //oppGamePanel.paintComponent(oppGamePanel.getGraphics());
 
         for(int i=0; i<oppPieces.size(); i++) {
 
@@ -747,7 +722,7 @@ public class SuperTetris implements MouseListener, KeyListener {
                 if(!juxtaposedRightSideways(pieces) && piece.blocks.get(0).x > 0 && piece.blocks.get(1).x > 0 && piece.blocks.get(2).x > 0 && piece.blocks.get(3).x > 0) {
 
                     piece.moveLeft();
-                    this.redrawBlocks();
+                    redrawAllBlocks();
 
                     putPiece();
                 }
@@ -759,10 +734,24 @@ public class SuperTetris implements MouseListener, KeyListener {
                 if(!juxtaposedLeftSideways(pieces) && piece.blocks.get(0).x < 9 && piece.blocks.get(1).x < 9 && piece.blocks.get(2).x < 9 && piece.blocks.get(3).x < 9) {
 
                     piece.moveRight();
-                    this.redrawBlocks();
+                    redrawAllBlocks();
 
                     putPiece();
                 }
+
+                break;
+
+            case KeyEvent.VK_SPACE :
+
+                while(isNotDown(piece) && !juxtaposedTopways(pieces)) {
+
+                    piece.moveDown();
+
+                }
+
+                redrawAllBlocks();
+
+                putPiece();
 
                 break;
 
@@ -773,7 +762,7 @@ public class SuperTetris implements MouseListener, KeyListener {
                     if(!juxtaposedTopways(pieces)) {
 
                         piece.moveDown();
-                        this.redrawBlocks();
+                        redrawAllBlocks();
 
                         putPiece();
                     
@@ -785,7 +774,7 @@ public class SuperTetris implements MouseListener, KeyListener {
             case KeyEvent.VK_UP :
 
                 piece.flip();
-                this.redrawBlocks();
+                redrawAllBlocks();
                 putPiece();
 
                 break;

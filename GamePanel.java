@@ -11,16 +11,6 @@ public class GamePanel extends JPanel {
     private ImageIcon imageIcon3 = new ImageIcon(this.getClass().getResource("/3.gif"));
     private ImageIcon imageIcon4 = new ImageIcon(this.getClass().getResource("/4.gif"));
     private Image image[] = new Image[4];
-    private Graphics g;
-    private GamePanel gamePanel;
-
-    public void setPanel(GamePanel gamePanel) {
-        this.gamePanel = gamePanel;
-    }
-
-    public GamePanel getPanel() {
-        return this.gamePanel;
-    }
 
     private boolean foundArr(int[] arr) {
         for (int i = 0; i < arr.length; i++) {
@@ -43,8 +33,6 @@ public class GamePanel extends JPanel {
         }
         Collections.shuffle(list);
 
-        g = this.getGraphics();
-
         for (int i = 0; i < blocks.size() && i < 4; i++) {
             if (blocks.get(i) != null) {
                 if (list.get(i) == 1) {
@@ -56,14 +44,8 @@ public class GamePanel extends JPanel {
                 } else if (list.get(i) == 4) {
                     image[i] = imageIcon4.getImage();
                 }
-                g.drawImage(image[i], blocks.get(i).x * 45, blocks.get(i).y * 45, 45, 45, null);
+                this.getGraphics().drawImage(image[i], blocks.get(i).x * 45, blocks.get(i).y * 45, 45, 45, null);
             }
         }
-    }
-
-    public void paintComponent(Graphics graphics) {
-
-        super.paintComponent(graphics);
-
     }
 }
